@@ -1,0 +1,11 @@
+/apps/common/__pycache__/
+/apps/common/migrations/__pycache__/
+
+/__pycache__/
+/daangn_biz/__pycache__/
+
+/apps/posts/__pycache__/
+/apps/posts/migrations/__pycache__/
+
+/.idea/
+*.pyc
