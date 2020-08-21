@@ -12,7 +12,7 @@ def product_category(request):
     제목에 검색어가 포함된 물건들 리스트
     """
     Search = request.GET['q']
-    product = Product.objects.filter(category = Search)
+    product = Product.objects.filter(code = Search)
 
     if not product:
         #검색 결과 없음.

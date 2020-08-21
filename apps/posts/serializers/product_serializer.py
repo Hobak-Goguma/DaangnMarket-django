@@ -10,7 +10,7 @@ class ProductSerializer(serializers.ModelSerializer):
     # member = serializers.ForeignKey(Member, models.CASCADE, related_name='member_id')
     class Meta:
         model = Product
-        fields = ('id_product', 'id_member', 'name', 'price', 'info', 'category', 'views', 'state', 'addr')
+        fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class ProductSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id_product', 'id_member', 'name', 'price', 'info', 'category', 'views', 'state', 'addr', 'thum_first')
+            'id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr', 'thum_first')
 
     # def get_thum_first(self, obj):
     #     k = ProductImage.objects.filter(id_product = obj.id_product).first()
