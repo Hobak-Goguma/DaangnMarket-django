@@ -40,26 +40,33 @@ def location_search(request):
             dis = memberaddr.distance
         #설정된 주소가 없을
         except Memberaddr.DoesNotExist :
-            product = Product.objects.filter(name__contains = Search)
-            if product.count() == 0 :
-                content = {
-                "message" : "검색한 제품이 없습니다.",
-                "result" : {"입력한 검색어" : Search}
+            content = {
+                "message" : "설정된 주소가 없습니다. 주소를 설정해 주세요.",
+                "result" : {}
                     }
-                return Response(content,status=status.HTTP_204_NO_CONTENT)
-            serializer = ProductSearchSerializer(product, many=True)
-            # 페이지 적용된 쿼리셋
-            paginated_product = paginator.paginate_queryset(product, request)
-            # 페이지 파라미터 (page, page_size) 있을 경우
-            # page_size 만 있을 경우 page=1 처럼 동작함
-            # page만 있을 경우 아래 if문 안 탐
-            if paginated_product is not None:
-                serializers = ProductSearchSerializer(paginated_product, many=True)
-                return paginator.get_paginated_response(serializers.data)
+            return Response(content,status=status.HTTP_204_NO_CONTENT)
 
-            # # 페이지 파라미터 없을 경우
-            serializer = ProductSearchSerializer(product, many =True)
-            return Response(serializer.data)
+
+            # product = Product.objects.filter(name__contains = Search)
+            # if product.count() == 0 :
+            #     content = {
+            #     "message" : "검색한 제품이 없습니다.",
+            #     "result" : {"입력한 검색어" : Search}
+            #         }
+            #     return Response(content,status=status.HTTP_204_NO_CONTENT)
+            # serializer = ProductSearchSerializer(product, many=True)
+            # # 페이지 적용된 쿼리셋
+            # paginated_product = paginator.paginate_queryset(product, request)
+            # # 페이지 파라미터 (page, page_size) 있을 경우
+            # # page_size 만 있을 경우 page=1 처럼 동작함
+            # # page만 있을 경우 아래 if문 안 탐
+            # if paginated_product is not None:
+            #     serializers = ProductSearchSerializer(paginated_product, many=True)
+            #     return paginator.get_paginated_response(serializers.data)
+
+            # # # 페이지 파라미터 없을 경우
+            # serializer = ProductSearchSerializer(product, many =True)
+            # return Response(serializer.data)
 
         #근처 주소 검색
         location = NearbyLocation.objects.filter(dong = addr).filter(distance = dis)
