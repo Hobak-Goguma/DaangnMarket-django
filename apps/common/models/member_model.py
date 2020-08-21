@@ -28,7 +28,7 @@ class Member(models.Model):
 
     class Meta:
         db_table = 'member'
-        app_label = 'common'
+        # app_label = 'common'
 
     def delete_image(self, *args, **kargs):
         os.remove(os.path.join(settings.MEDIA_ROOT, self.file.path))

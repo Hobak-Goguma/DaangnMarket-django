@@ -5,38 +5,43 @@ from rest_framework.response import Response
 from common.models.member_model import Member
 from common.serializers.member_serializer import MemberSerializer, MemberReviseSerializer
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def member_detail(request, id_member):
-    """
-    개별 유저 조회, 업데이트, 삭제
-    ---
-    유저의 id_member를 통해 개별 조회, 업데이트, 삭제 합니다.
-    """
-    try:
-        member = Member.objects.get(pk=id_member)
-    except Member.DoesNotExist:
-        content = {
-            "message" : "없는 사용자 입니다.",
-            "result" : {}
-                }
-        return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = MemberSerializer(member)
-        return Response(serializer.data)
+class MemberDetail(APIView):
+	"""
+	개별 유저 조회, 업데이트, 삭제
+	---
+	유저의 id_member를 통해 개별 조회, 업데이트, 삭제 합니다.
+	"""
 
-    elif request.method == 'PUT':
-        serializer = MemberReviseSerializer(member, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	def get(self, request, id_member, *args, **kwargs):
+		try:
+			self.member = Member.objects.get(id_member=id_member)
+		except Member.DoesNotExist:
+			content = {
+				"message": "없는 사용자 입니다.",
+				"result": {}
+			}
+			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == 'DELETE':
-        member.delete()
-        content = {
-            "message" : "pk :" + id_member + " 삭제 완료",
-            "result" : {}
-                }
-        return Response(content ,status=status.HTTP_204_NO_CONTENT)
+		serializer = MemberSerializer(self.member)
+		return Response(serializer.data)
+
+	def put(self, request, id_member, *args, **kwargs):
+		self.member = Member.objects.get(id_member=id_member)
+		serializer = MemberReviseSerializer(self.member, data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	def delete(self, request, *args, **kwargs):
+		self.member.delete()
+		content = {
+			"message": "pk :" + request.id_member + " 삭제 완료",
+			"result": {}
+		}
+		return Response(content, status=status.HTTP_204_NO_CONTENT)

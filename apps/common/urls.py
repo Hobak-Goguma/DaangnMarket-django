@@ -1,15 +1,16 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from common.views import *
 from common import views
 
 urlpatterns = [
-    path('member', views.member_list, name='member_list'),
+    path('member', MemberListView.as_view(), name='member_list'),
     path('member/login', views.member_login, name='login'),
     path('member/overlap', views.member_overlap, name='member_overlap'),
     path('member/overlap/nick-name', views.nick_name_overlap, name='nick_name_overlap'),
     # path('member/search', views.member_search, name='member_search'),
-    path('member/<id_member>', views.member_detail, name='member_detail'),
+    path('member/<id_member>', MemberDetail.as_view(), name='member_detail'),
     path('member/touch/<id_member>', views.member_touch, name='member_touch'),
     path('member/addr/id/<id_member>', views.member_addr, name='member_addr'),
     path('member/addr/create', views.member_addr_create, name='member_addr_create'),
