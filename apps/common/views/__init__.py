@@ -4,7 +4,7 @@ from .member_list_views import MemberListView
 from .member_login_views import member_login
 from .member_overlap_views import member_overlap
 from .member_search_views import member_search
-from .member_touch_views import member_touch
+from .member_touch_views import member_info
 from .nick_name_overlap_views import nick_name_overlap
 # from .seller_review_list_views import seller_review_list
 from .seller_review_views import seller_review

@@ -14,12 +14,12 @@ class Member(models.Model):
     user_pw: str = models.CharField(max_length=300)
     nick_name: str = models.CharField(max_length=30)
     tel: str = models.CharField(max_length=20)
-    birth = models.DateField(null=True)
-    email: str = models.CharField(max_length=30)
-    gender: str = models.CharField(max_length=6)
+    birth = models.DateField(null=True, blank=True)
+    email: str = models.CharField(max_length=30, blank=True)
+    gender: str = models.CharField(max_length=6, blank=True)
     cdate: datetime = models.DateTimeField(auto_now_add=True)
-    udate: datetime = models.DateTimeField(auto_now=False, null=True)
-    last_date: datetime = models.DateTimeField(auto_now=False, null=True)
+    udate: datetime = models.DateTimeField(auto_now=False, null=True, blank=True)
+    last_date: datetime = models.DateTimeField(auto_now=False, null=True, blank=True)
     image: ProcessedImageField = ProcessedImageField(
         null=True,
         upload_to="User",

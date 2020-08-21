@@ -16,8 +16,16 @@ class MemberDetail(APIView):
 	---
 	유저의 id_member를 통해 개별 조회, 업데이트, 삭제 합니다.
 	"""
+	def initial(self, request, id_member, *args, **kwargs):
+		self.format_kwarg = self.get_format_suffix(**kwargs)
+		neg = self.perform_content_negotiation(request)
+		request.accepted_renderer, request.accepted_media_type = neg
+		version, scheme = self.determine_version(request, *args, **kwargs)
+		request.version, request.versioning_scheme = version, scheme
+		self.perform_authentication(request)
+		self.check_permissions(request)
+		self.check_throttles(request)
 
-	def get(self, request, id_member, *args, **kwargs):
 		try:
 			self.member = Member.objects.get(id_member=id_member)
 		except Member.DoesNotExist:
@@ -27,8 +35,9 @@ class MemberDetail(APIView):
 			}
 			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-		serializer = MemberSerializer(self.member)
-		return Response(serializer.data)
+	# def get(self, request, *args, **kwargs):
+	# 	serializer = MemberSerializer(self.member)
+	# 	return Response(serializer.data)
 
 	def put(self, request, id_member, *args, **kwargs):
 		self.member = Member.objects.get(id_member=id_member)
