@@ -28,13 +28,10 @@ def member_addr(request, id_member):
 		return Response(serializer.data)
 
 	elif request.method == 'DELETE':
-		# 파라미터 get방식
-		# Addr = request.GET['addr']
-
-		# 제이슨 방식
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
 		Addr = received_json_data['addr']
+
 		# 1개인 경우 삭제 불가
 		if memberAddr.count() <= 1:
 			content = {
@@ -59,7 +56,6 @@ def member_addr_create(request):
 	"""
 	멤버 주소 생성
 	"""
-
 	if request.method == 'POST':
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
