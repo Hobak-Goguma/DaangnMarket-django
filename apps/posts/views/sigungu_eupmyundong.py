@@ -47,9 +47,16 @@ def eupmyundong(request, sido, sigungu):
     읍면동 리스트 호출 API
     """
 
+    if sido != "서울특별시" :
+        content = {
+            "message" : "현재 서울특별시만 서비스 진행 중입니다 !",
+            "result" : {}
+        }
+        return Response(content)
+
+
     gu = Location.objects.all()
     serializer = LocationSerializer(gu, many=True)
-    # print(sido,sigungu)
     # type : list [ 구 리스트 ]
     gu_list = list(set([i['gu'] for i in serializer.data]))
 
@@ -85,9 +92,14 @@ def eupmyundong(request, sido, sigungu):
 
 @api_view(['GET'])
 def eupmyundong_check(request, sido):
+
+    gu = Location.objects.all()
+    serializer = LocationSerializer(gu, many=True)
+    gu_list = list(set([i['gu'] for i in serializer.data]))
+
     content = {
     "message" : "시도 / 시군구 를 입력해주세요",
-    "result" : {}
+    "result" : { "sigungu" : gu_list }
     }
     return Response(content)
 
