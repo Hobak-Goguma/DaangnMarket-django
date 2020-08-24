@@ -9,4 +9,4 @@ class MannerLog(models.Model):
 
     class Meta:
         db_table = 'manner_log'
-        app_label = 'common'
+        # app_label = 'common'
