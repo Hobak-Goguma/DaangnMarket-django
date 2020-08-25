@@ -1,4 +1,5 @@
 from datetime import datetime
+from posts.models.posts_category_code_models import CategoryCode
 
 from django.db import models
 
@@ -12,7 +13,7 @@ class Company(models.Model):
     addr: str = models.CharField(max_length=200)
     tel: str = models.CharField(max_length=20, blank=True, null=True)
     info: str = models.CharField(max_length=3000, blank=True, null=True)
-    category = models.CharField(max_length=15, blank=True, null=True)
+    code: CategoryCode = models.ForeignKey('posts.CategoryCode', models.DO_NOTHING, default=CategoryCode.CODE.ETC)
     img: str = models.CharField(max_length=2000, blank=True, null=True)
     cdate: datetime = models.DateTimeField(auto_now_add=True)
     udate: datetime = models.DateTimeField(auto_now=True)
