@@ -38,13 +38,6 @@ class ProductSearchSerializer(serializers.ModelSerializer):
     def get_thum_first(self, obj):
         Data = ProductImageSerializer(obj.thum.first()).data
         if Data['image']:
-            # print('------------------BASE_DIR', settings.MEDIA_URL)
-            # print('-----------object', obj.thum.first())
-            # print()
-            # _PATH = os.path.join(settings.BASE_DIR, str(obj.thum.first()))
-            # print(obj.thum)
-            # print(_PATH)
-            # print(settings.BASE_DIR + str(obj.thum.first()))
             Data['image'] = 'http://www.daangn.site/image' + get_thumbnail(obj.thum.first().image, '1500x1500',
                                                                            crop='center', quality=82).url
         # request.META['HTTP_HOST']+
@@ -60,5 +53,3 @@ class ProductTouchSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('id_product', 'id_member', 'name', 'price', 'info', 'category', 'views', 'state', 'addr')
         read_only_fields = ['id_product', 'id_member', 'views', 'state']
-
-#리베이스 ㅎㅎ
