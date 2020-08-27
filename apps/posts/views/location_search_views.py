@@ -33,12 +33,10 @@ def location_search(request):
 
 	# 회원 검색
 	if 'id-member' in request.headers:
-		# 주소 유무 체크
 		try:
 			memberaddr = Memberaddr.objects.filter(id_member=request.headers['id-member']).get(select='Y')
 			addr = memberaddr.addr
 			dis = memberaddr.distance
-		# 설정된 주소가 없을
 		except Memberaddr.DoesNotExist:
 			content = {
 				"message": "설정된 주소가 없습니다. 주소를 설정해 주세요.",
@@ -85,12 +83,13 @@ def location_search(request):
 		# page_size 만 있을 경우 page=1 처럼 동작함
 		# page만 있을 경우 아래 if문 안 탐
 		if paginated_product_sum is not None:
-			serializers = ProductSearchSerializer(paginated_product_sum, many=True)
+			serializers = ProductSearchSerializer(paginated_product_sum, many=True, context={'request': request})
 			return paginator.get_paginated_response(serializers.data)
 
 		# # 페이지 파라미터 없을 경우
-		serializer = ProductSearchSerializer(product_sum, many=True)
+		serializer = ProductSearchSerializer(product_sum, many=True, context={'request': request})
 		return Response(serializer.data)
+
 	# 비회원
 	else:
 		# 모든 제품 검색
