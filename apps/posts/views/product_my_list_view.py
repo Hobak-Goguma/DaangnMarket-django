@@ -23,7 +23,6 @@ class ProductMyList(APIView):
 			content = {
 				"message": "올바른 ID값이 아닙니다.",
 				"result": {}
-
 			}
 			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
