@@ -18,4 +18,5 @@ class CompanyTouchSerializer(serializers.ModelSerializer):
 class CompanySearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id_company', 'id_member', 'name', 'addr', 'tel', 'info', 'category', 'img')
+        fields = ('id_company', 'id_member', 'name', 'addr', 'tel', 'info', 'code', 'img')
+        read_only_fields =  '__all__'

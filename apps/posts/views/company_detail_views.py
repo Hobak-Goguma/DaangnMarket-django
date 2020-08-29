@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from common.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
+from posts.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
 from posts.models.company_model import Company
 
 

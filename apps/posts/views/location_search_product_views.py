@@ -11,7 +11,7 @@ from posts.serializers.product_serializer import ProductSearchSerializer
 
 
 @api_view(['GET'])
-def location_search(request):
+def location_search_product(request):
 	"""
 	사용자의 위치에 따른 product 검색
 

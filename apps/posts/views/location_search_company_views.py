@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from common.models.member_addr_model import Memberaddr
 from common.models.nearby_Location_model import NearbyLocation
 from posts.models.company_model import Company
-from common.serializers.company_serializer import CompanySearchSerializer
+from posts.serializers.company_serializer import CompanySearchSerializer
 
 
 @api_view(['GET'])
@@ -61,7 +61,7 @@ def location_search_company(request):
 			return paginator.get_paginated_response(serializers.data)
 
 		serializer = CompanySearchSerializer(company_sum, many=True)
-		return Response(serializer.data)
+		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	# 비회원
 	else:
@@ -79,4 +79,4 @@ def location_search_company(request):
 
 		serializer = CompanySearchSerializer(company, many=True)
 
-		return Response(serializer.data)
+		return Response(serializer.data, status=status.HTTP_200_OK)

@@ -5,14 +5,15 @@ from django.urls import path
 from posts import views
 from posts.views.product_my_list_view import ProductMyList
 
+
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
     path('product/upload', views.upload_file, name='imagetest'),
     path('product/<int:id_product>', views.product_thumbnail, name='productThumbnail'),
     path('company', views.company_list, name='company_list'),
     path('company/<int:id_company>', views.company_detail, name='company_detail'),
+    path('product/search', views.location_search_product, name='location_search_product'),
     path('company/search', views.location_search_company, name='location_search_company'),
-    path('product/search', views.location_search, name='location_search'),
     path('product/search/category', views.product_category, name='product_category'),
     path('product', views.product_list, name='product_list'),
     path('product/id/<int:id_product>', views.product_detail, name='product_detail'),
