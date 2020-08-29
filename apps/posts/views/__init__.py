@@ -6,4 +6,4 @@ from .location_search_views import location_search
 from .product_list_views import product_list
 from .product_detail_views import product_detail
 from .product_category_views import product_category
-from .location_search_company import location_search_company
+from .location_search_company_views import location_search_company
