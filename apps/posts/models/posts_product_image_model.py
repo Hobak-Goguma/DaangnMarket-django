@@ -11,7 +11,7 @@ from posts.models.product_model import Product
 class ProductImage(models.Model):
     def __str__(self):
         return self.image.url
-    id_product: Product = models.ForeignKey('common.Product', on_delete=models.CASCADE, db_column='id_product', related_name='thum')
+    id_product: Product = models.ForeignKey('posts.Product', on_delete=models.CASCADE, db_column='id_product', related_name='thum')
     id_product_img: int = models.AutoField(primary_key=True)
     title: str = models.CharField(default='', max_length=50)
     image: ProcessedImageField = ProcessedImageField(

@@ -22,9 +22,10 @@ class CategoryCode(models.Model):
         PET = 'PET', '반려동물용품'
         CULTURE = 'CULTURE', '도서/티켓/음반'
         ETC = 'ETC', '기타 중고물품'
+        LOCAL_SHOP = 'LOCAL_SHOP', '동네업체 소개'
 
     category: CATEGORY = models.CharField(max_length=20, choices=CATEGORY.choices, default=CATEGORY.PRODUCT)
-    code: CODE = models.CharField(max_length=20, primary_key=True, db_column='code',
+    code: CODE = models.CharField(max_length=30, primary_key=True, db_column='code',
                                   choices=CODE.choices, default=CODE.ETC)
 
     class Meta:

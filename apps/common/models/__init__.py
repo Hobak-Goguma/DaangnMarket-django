@@ -1,17 +1,15 @@
-# from .member_model import Member
-# from .company_model import Company
-# from .location_model import Location
-# from .log_model import Log
-# from .manner_log_model import MannerLog
-# from .manner_model import Manner
-# from .manner_reviewer_model import MannerReviewer
-# from .member_addr_model import Memberaddr
-# from .nearby_Location_model import NearbyLocation
-# from .product_model import Product
-# from .rate_model import Rate
-# from .realdeal_model import RealDeal
-# from .seller_rate_model import SellerRate
-# from .seller_review_model import SellerReview
-# from .shopper_rate_model import ShopperRate
-# from .shopper_review_model import ShopperReview
-# from .wishlist_model import Wishlist
+from .member_model import Member
+from .location_model import Location
+from .log_model import Log
+from .manner_log_model import MannerLog
+from .manner_model import Manner
+from .manner_reviewer_model import MannerReviewer
+from .member_addr_model import Memberaddr
+from .nearby_Location_model import NearbyLocation
+from .rate_model import Rate
+from .realdeal_model import RealDeal
+from .seller_rate_model import SellerRate
+from .seller_review_model import SellerReview
+from .shopper_rate_model import ShopperRate
+from .shopper_review_model import ShopperReview
+from .wishlist_model import Wishlist
