@@ -1,5 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.utils import json
 
 from posts.forms import *
 
@@ -22,7 +24,7 @@ def upload_file(request):
         form = ProductUploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             # file is saved
-            fileURL = form.save()
+            form.save()
 
             return Response(status=status.HTTP_200_OK)
 
