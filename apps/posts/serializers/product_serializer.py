@@ -38,7 +38,8 @@ class ProductSearchSerializer(serializers.ModelSerializer):
 		return Data
 
 class ProductTouchSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Product
-		fields = ('id_product', 'id_member', 'name', 'price', 'info', 'category', 'views', 'state', 'addr')
-		read_only_fields = ['id_product', 'id_member', 'views', 'state']
+
+    class Meta:
+        model = Product
+        fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
+        read_only_fields = ['id_product', 'id_member', 'views', 'state']
