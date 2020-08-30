@@ -19,15 +19,19 @@ class Member(models.Model):
 	cdate: datetime = models.DateTimeField(auto_now_add=True)
 	udate: datetime = models.DateTimeField(auto_now=False, null=True, blank=True)
 	last_date: datetime = models.DateTimeField(auto_now=False, null=True, blank=True)
+	image_title: str = models.CharField(default='', max_length=50)
 	image: ProcessedImageField = ProcessedImageField(
 		null=True,
-		upload_to="User",
+		upload_to="member",
 		format='JPEG',
 	)
 
 	class Meta:
 		db_table = 'member'
 
+	def delete_image_title(self):
+		self.image = ''
+
 	def delete_image(self, *args, **kargs):
-		os.remove(os.path.join(settings.MEDIA_ROOT, self.file.path))
-		super().delete(*args, **kargs)
+		os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+		self.delete_image_title(*args, **kargs)

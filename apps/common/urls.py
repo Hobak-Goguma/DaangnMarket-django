@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from common.views import *
@@ -21,8 +23,12 @@ urlpatterns = [
 	path('wishlist/<id_member>', views.wishlist_detail, name='wishlist_detail'),
 	path('product/selling/<id_member>', views.selling_product_list, name='selling_product_list'),
 	path('review/seller', views.seller_review, name='seller_review_list'),
-	path('review/shopper', views.shopper_review, name='shopper_review_list')
-
+	path('review/shopper', views.shopper_review, name='shopper_review_list'),
+	path('member/upload', views.member_upload_file, name='member_upload_file'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+if settings.DEBUG:
+	urlpatterns += static(settings.MEDIA_URL,
+	                      document_root=settings.MEDIA_ROOT)
