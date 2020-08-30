@@ -13,7 +13,7 @@ class ProductImage(models.Model):
         return self.image.url
     id_product: Product = models.ForeignKey('posts.Product', on_delete=models.CASCADE, db_column='id_product', related_name='thum')
     id_product_img: int = models.AutoField(primary_key=True)
-    title: str = models.CharField(default='', max_length=50)
+    image_title: str = models.CharField(default='', max_length=50)
     image: ProcessedImageField = ProcessedImageField(
         null=True, 
         upload_to="product",
@@ -30,7 +30,7 @@ class ProductImage(models.Model):
     # image_tag.allow_tags = True
 
     def delete(self, *args, **kargs):
-        os.remove(os.path.join(settings.MEDIA_ROOT, self.file.path))
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(ProductImage, self).delete(*args, **kargs)
 
     class Meta:
