@@ -11,6 +11,3 @@ class MemberUploadFileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberUploadFileForm, self).__init__(*args, **kwargs)
         self.fields['image'].required = False
-        # member = Member.objects.get(id_member=self.fields['id_member'])
-        # member.image = self.fields['id_member']
-        # member.image_title = self.fields['image_title']

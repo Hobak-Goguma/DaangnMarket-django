@@ -27,16 +27,20 @@ def member_upload_file(request):
 		if form.is_valid():
 			# file is saved
 			form.save()
-			return Response(status=status.HTTP_200_OK)
+			content = {
+				"message": "파일 업로드 완료",
+				"result": {"image_title": member.image_title}
+			}
+			return Response(content, status=status.HTTP_200_OK)
 
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
-		title = received_json_data['image_title']
-		q = Member.objects.get(title=title)
+		id_member = received_json_data['id_member']
+		q = Member.objects.get(id_member=id_member)
 		q.delete_image()
 		content = {
 			"message": "삭제 완료",
-			"result": {"title": title}
+			"result": {"image_title": q.image_title}
 		}
 		return Response(content, status=status.HTTP_204_NO_CONTENT)
