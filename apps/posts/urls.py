@@ -20,6 +20,7 @@ urlpatterns = [
     path('product/<id_product>', views.product_detail, name='prduct_detail'),
     path('sigungu/<sido>', views.sigungu, name='sigungu'),
     path('eupmyundong/<sido>/<sigungu>', views.eupmyundong, name='eupmyundong'),
+    path('eupmyundong/<sido>/', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
     path('product', views.product_list, name='product_list'),
     path('product/id/<int:id_product>', views.product_detail, name='product_detail'),
     path('product/my-list', ProductMyList.as_view(), name='my_product'),

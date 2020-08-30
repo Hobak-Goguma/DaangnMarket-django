@@ -8,6 +8,7 @@ from .product_category import product_category
 from .location_search_company import location_search_company
 from .sigungu_eupmyundong import sigungu
 from .sigungu_eupmyundong import eupmyundong
+from .sigungu_eupmyundong import sido_eupmyundong_list
 from .product_category_views import product_category
 from .location_search_company_views import location_search_company
 from .location_search_product_views import location_search_product
