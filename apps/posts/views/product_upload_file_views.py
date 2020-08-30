@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.utils import json
 
-from posts.forms.product_upload_file_forms import ProductUploadFileForm
+from posts.forms.product_upload_file_form import ProductUploadFileForm
 from posts.models.posts_product_image_model import ProductImage
 
 

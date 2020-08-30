@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.utils import json
 
-from common.forms.member_upload_file_forms import MemberUploadFileForm
+from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
 
 

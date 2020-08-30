@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 
 from common.models.member_model import Member
-from posts.models.posts_category_code_models import CategoryCode
+from posts.models.posts_category_code_model import CategoryCode
 
 
 class Product(models.Model):

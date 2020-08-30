@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from posts import views
-from posts.views.product_my_list_view import ProductMyList
+from posts.views.product_my_list_views import ProductMyList
 
 
 urlpatterns = [

@@ -1,5 +1,5 @@
 from datetime import datetime
-from posts.models.posts_category_code_models import CategoryCode
+from posts.models.posts_category_code_model import CategoryCode
 
 from django.db import models
 
