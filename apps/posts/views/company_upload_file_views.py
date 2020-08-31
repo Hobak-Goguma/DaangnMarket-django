@@ -27,12 +27,11 @@ def company_upload_file(request):
 	if request.method == 'POST':
 		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
 		try:
-			id_company = Company.objects.get(id_member=request.POST['id_member'])
+			id_company: int = Company.objects.get(id_member=request.POST['id_member']).id_company
 		except Company.DoesNotExist:
 			content = {
 				"message": "올바른 업체가 없습니다.",
 				"result": request.FILES['id_member']
-
 			}
 			Response(content, status=status.HTTP_404_NOT_FOUND)
 

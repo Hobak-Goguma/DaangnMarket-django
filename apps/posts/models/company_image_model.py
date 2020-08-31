@@ -11,7 +11,8 @@ from posts.models.company_model import Company
 class CompanyImage(models.Model):
 
 	def upload_to_id_image(instance, filename):
-		name: str = Company.objects.get(id_company=instance.id_company).name
+		print(instance.image_title)
+		name: str = Company.objects.get(id_company=instance.id_company.id_company).name
 		extension = os.path.splitext(filename)[1].lower()
 		if extension != '.jpg' or '.jpeg':
 			extension = '.jpg'
