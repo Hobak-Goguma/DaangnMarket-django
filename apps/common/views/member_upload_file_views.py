@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.utils import json
+import os
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
@@ -22,16 +23,17 @@ def member_upload_file(request):
 	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
 
 	if request.method == 'POST':
-		member = Member.objects.get(id_member=request.POST['id_member'])
-		form = MemberUploadFileForm(request.POST, request.FILES, instance=member)
+		member: Member = Member.objects.get(id_member=request.POST['id_member'])
+		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
+		form = MemberUploadFileForm({'image_title': image_title}, request.FILES, instance=member)
 		if form.is_valid():
 			# file is saved
 			form.save()
-			content = {
-				"message": "파일 업로드 완료",
-				"result": {"image_title": member.image_title}
-			}
-			return Response(content, status=status.HTTP_200_OK)
+		content = {
+			"message": "파일 업로드 완료",
+			"result": {"image_title": member.image_title}
+		}
+		return Response(content, status=status.HTTP_200_OK)
 
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')

@@ -10,6 +10,8 @@ class Member(models.Model):
 
 	def upload_to_id_image(instance, filename):
 		extension = os.path.splitext(filename)[1].lower()
+		if extension != '.jpg' or '.jpeg':
+			extension = '.jpg'
 		path = 'member/%(id)s_%(date_now)s' % {
 			'id': instance.user_id,
 			'date_now': datetime.now().date().strftime("%Y%m%d")}
