@@ -3,9 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from sorl.thumbnail import get_thumbnail
 
+from posts.models.posts_product_image_model import ProductImage
 from posts.models.product_model import Product
 from posts.serializers.product_serializer import ProductSerializer, ProductTouchSerializer
-from posts.models.posts_product_image_model import ProductImage
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -16,7 +16,6 @@ def product_detail(request, id_product):
     ---
     # parameter
         - s = 사진픽셀 크기 ex) 400x400
-        - q = 사진품질 ex) 1~100 당근마켓은 82
 
     # 수정가능 목록 form/data OR json/data
         - name : 상품 제목
@@ -50,16 +49,12 @@ def product_detail(request, id_product):
         serializer = ProductSerializer(product)
 
         s = request.GET['s']
-        q = int(request.GET['q'])
-        # TODO 데이터 가져올때, id_product_img기준으로 정렬(오름차순)
-        Data = ProductImage.objects.filter(id_product=id_product)
-
+        Data = ProductImage.objects.filter(id_product=id_product).order_by('id_product_img')
         imageList = []
         imageDict = {}
-        # TODO 'SERVER_PROTOCOL': 'HTTP/1.0', request.META['SERVER_PROTOCOL'] HTTP값으로 변환
         for i in range(Data.count()):
             imageDict['thum'] = request.META['HTTP_HOST'] + '/image' + get_thumbnail(Data[i].image, s, crop='center',
-                                                                                     quality=q).url
+                                                                                     quality=82).url
             imageDict['origin'] = request.META['HTTP_HOST'] + '/image/media/' + str(Data[i].image)
             imageList.append(imageDict)
             content = serializer.data

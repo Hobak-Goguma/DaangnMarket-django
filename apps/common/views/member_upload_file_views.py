@@ -1,6 +1,6 @@
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.utils import json
 import os
 
@@ -43,6 +43,6 @@ def member_upload_file(request):
 		q.delete_image()
 		content = {
 			"message": "삭제 완료",
-			"result": {"image_title": q.image_title}
+			"result": {"id_member": q.id_member}
 		}
 		return Response(content, status=status.HTTP_204_NO_CONTENT)

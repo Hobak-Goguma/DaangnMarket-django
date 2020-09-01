@@ -11,14 +11,13 @@ from posts.models.company_model import Company
 class CompanyImage(models.Model):
 
 	def upload_to_id_image(instance, filename):
-		print(instance.image_title)
 		name: str = Company.objects.get(id_company=instance.id_company.id_company).name
 		extension = os.path.splitext(filename)[1].lower()
 		if extension != '.jpg' or '.jpeg':
 			extension = '.jpg'
 		path = 'company/%(id)s_%(date_now)s' % {
 			'id': name,
-			'date_now': datetime.now().date().strftime("%Y%m%d")}
+			'date_now': datetime.now().strftime("%Y%m%d%H%M%S")}
 		return '%(path)s%(extension)s' % {'path': path,
 		                                  'extension': extension}
 
