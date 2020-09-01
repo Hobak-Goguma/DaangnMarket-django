@@ -25,9 +25,10 @@ def company_upload_file(request):
 	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
 
 	if request.method == 'POST':
+		id_member = request.headers['id-member']
 		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
 		try:
-			id_company: int = Company.objects.get(id_member=request.POST['id_member']).id_company
+			id_company: int = Company.objects.get(id_member=id_member).id_company
 		except Company.DoesNotExist:
 			content = {
 				"message": "올바른 업체가 없습니다.",
@@ -57,16 +58,16 @@ def company_upload_file(request):
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
-		id_company = received_json_data['id_company']
-		q = CompanyImage.objects.filter(id_company=id_company).order_by('id').first()
-		q_count = CompanyImage.objects.filter(id_company=id_company).count() - 1
+		id_member = received_json_data['id_member']
+		q = CompanyImage.objects.filter(id_company__id_member=id_member).order_by('id').first()
+		q_count = CompanyImage.objects.filter(id_company__id_member=id_member).count() - 1
 
 		try:
 			id: int = q.id
 		except AttributeError:
 			content = {
 				"message": "더이상 업로드된 사진이 없습니다.",
-				"result": {"id_company": id_company}
+				"result": {"id_company": id_member}
 			}
 			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
