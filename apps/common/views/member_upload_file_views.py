@@ -1,8 +1,9 @@
+import os
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.utils import json
-import os
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
@@ -39,7 +40,15 @@ def member_upload_file(request):
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
 		id_member = received_json_data['id_member']
-		q = Member.objects.get(id_member=id_member)
+		try:
+			q = Member.objects.get(id_member=id_member)
+		except Member.DoesNotExist:
+			content = {
+				"message": "회원 프로필 사진이 없습니다.",
+				"result": {"id_member": id_member}
+			}
+			return Response(content, status=status.HTTP_404_NOT_FOUND)
+
 		q.delete_image()
 		content = {
 			"message": "삭제 완료",
