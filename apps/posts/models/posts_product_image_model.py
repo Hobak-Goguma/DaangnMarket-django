@@ -35,4 +35,3 @@ class ProductImage(models.Model):
 
     class Meta:
         db_table = 'posts_product_image'
-        app_label = 'posts'
