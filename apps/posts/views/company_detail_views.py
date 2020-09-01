@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from posts.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
 from posts.models.company_model import Company
+from posts.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -21,7 +21,7 @@ def company_detail(request, id_company):
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CompanySerializer(company)
+        serializer = CompanySerializer(company, context={'request': request})
         return Response(serializer.data)
 
     elif request.method == 'PUT':

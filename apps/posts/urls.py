@@ -8,7 +8,7 @@ from posts.views.product_my_list_views import ProductMyList
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
     path('product/upload', views.product_upload_file, name='product_upload'),
-    path('product/<int:id_product>', views.product_thumbnail, name='productThumbnail'),
+    # path('product/<int:id_product>', views.product_thumbnail, name='productThumbnail'),
     path('company', views.company_list, name='company_list'),
     path('company/<int:id_company>', views.company_detail, name='company_detail'),
     path('company/upload', views.company_upload_file, name='company_upload'),

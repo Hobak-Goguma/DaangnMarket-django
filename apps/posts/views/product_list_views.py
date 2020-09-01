@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from posts.models.product_model import Product
-from posts.serializers.product_serializer import ProductSerializer
+from posts.serializers.product_serializer import ProductSearchSerializer, ProductSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -26,7 +26,7 @@ def product_list(request):
     """
     if request.method == 'GET':
         product = Product.objects.all()
-        serializer = ProductSerializer(product, many=True)
+        serializer = ProductSearchSerializer(product, many=True, context={'request': request})
         return Response(serializer.data)
 
     elif request.method == 'POST':
