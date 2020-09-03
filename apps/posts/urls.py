@@ -21,7 +21,6 @@ urlpatterns = [
     path('product/<id_product>', views.product_detail, name='prduct_detail'),
     path('product/<int:id_product>', views.product_detail, name='prduct_detail'),
     path('product/category/list', ProductCategoryList.as_view(), name='ProductCategoryList'),
-    path('product/search/category', views.product_category, name='product_category'),
     path('sigungu/<str:sido>', views.sigungu, name='sigungu'),
     path('eupmyundong/<str:sido>/<str:sigungu>', views.eupmyundong, name='eupmyundong'),
     path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),

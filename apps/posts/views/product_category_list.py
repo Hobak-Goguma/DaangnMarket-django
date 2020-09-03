@@ -1,9 +1,8 @@
-from posts.models.posts_category_code_models import CategoryCode
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from posts.serializers.product_serializer import ProductCategoryCode
+from posts.models.posts_category_code_model import CategoryCode
 
 
 class ProductCategoryList(APIView):
@@ -15,6 +14,10 @@ class ProductCategoryList(APIView):
 	"""
 
 	def get(self, request, *args, **kwargs):
-		category = CategoryCode.objects.all()
-		serializer = ProductCategoryCode(category, many=True)
-		return Response(serializer.data, status=status.HTTP_200_OK)
+		product_code = list(CategoryCode.objects.filter(category='PRODUCT').values_list('code', flat=True))
+		promotion_code = list(CategoryCode.objects.filter(category='PROMOTION').values_list('code', flat=True))
+		data = {
+			"product_code": product_code,
+			"promotion_code": promotion_code
+		}
+		return Response(data, status=status.HTTP_200_OK)

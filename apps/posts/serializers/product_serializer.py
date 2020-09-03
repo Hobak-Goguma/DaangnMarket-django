@@ -1,4 +1,3 @@
-from posts.models.posts_category_code_models import CategoryCode
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
 
@@ -42,9 +41,3 @@ class ProductTouchSerializer(serializers.ModelSerializer):
 		model = Product
 		fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
 		read_only_fields = ['id_product', 'id_member', 'views', 'state']
-
-class ProductCategoryCode(serializers.ModelSerializer):
-	class Meta:
-		model = CategoryCode
-		fields = ('category', 'code')
-		read_only_fields = ['category', 'code']
