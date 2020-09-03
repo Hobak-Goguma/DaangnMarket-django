@@ -7,7 +7,7 @@ from posts.serializers.product_serializer import ProductSerializer
 
 
 @api_view(['GET'])
-def product_category(request):
+def product_category_search(request):
     """
     제목에 검색어가 포함된 물건들 리스트
     """

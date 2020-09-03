@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-# TextXhoices에 대해 django에서 찾아보세여! 상태에 보통 쓰인다고 해서 도입함.
 class CategoryCode(models.Model):
 	class CATEGORY(models.TextChoices):
 		PRODUCT = 'PRODUCT', _('Product')
