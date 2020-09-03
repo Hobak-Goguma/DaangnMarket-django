@@ -14,6 +14,7 @@ class Company(models.Model):
 	tel: str = models.CharField(max_length=20, blank=True, null=True)
 	info: str = models.CharField(max_length=3000, blank=True, null=True)
 	code: CategoryCode = models.ForeignKey('posts.CategoryCode', models.DO_NOTHING, default=CategoryCode.CODE.ETC, db_column='code')
+	views: int = models.IntegerField(default=0)
 	cdate: datetime = models.DateTimeField(auto_now_add=True)
 	udate: datetime = models.DateTimeField(auto_now=True)
 
