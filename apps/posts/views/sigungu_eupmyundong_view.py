@@ -1,9 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from posts.serializers.location_serializer import LocationSerializer
 from common.models.location_model import Location
 
 
@@ -43,7 +41,7 @@ def eupmyundong(request, sido, sigungu):
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
     allow_sido = ["서울특별시"]
-    if not (sido in allow_sido):
+    if sido not in allow_sido:
         content = {
             "message": "현재 " + str(allow_sido) + " 지역만 서비스 진행 중입니다 !",
             "result": {}
@@ -65,7 +63,7 @@ def sido_eupmyundong_list(request, sido):
 
     gu_dong_dict = dict.fromkeys(gu_list, [])
     for gu in gu_list:
-        gu_dong_dict[gu] = list(Location.objects.values_list('dong', flat=True).filter(gu=gu).distinct())
+        gu_dong_dict[gu] = list(Location.objects.filter(gu=gu).values_list('dong', flat=True).distinct())
 
     content = {
         "message": sido + " 의 읍면동 리스트 입니다.",

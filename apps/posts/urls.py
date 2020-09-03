@@ -5,7 +5,6 @@ from django.urls import path
 from posts import views
 from posts.views.product_my_list_views import ProductMyList
 
-
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
     path('product/upload', views.product_upload_file, name='imagetest'),
@@ -17,7 +16,7 @@ urlpatterns = [
     path('product/search/category', views.product_category, name='product_category'),
     path('product/<int:id_product>', views.product_detail, name='prduct_detail'),
     path('product', views.product_list, name='prduct_list'),
-    path('product/<id_product>', views.product_detail, name='prduct_detail'),
+    path('product/<int:id_product>', views.product_detail, name='prduct_detail'),
     path('sigungu/<str:sido>', views.sigungu, name='sigungu'),
     path('eupmyundong/<str:sido>/<str:sigungu>', views.eupmyundong, name='eupmyundong'),
     path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
