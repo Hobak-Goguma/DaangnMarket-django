@@ -52,7 +52,7 @@ def company_detail(request, id_company):
 		return Response(data, status=status.HTTP_200_OK)
 
 	elif request.method == 'PUT':
-		serializer = CompanyTouchSerializer(company, data=request.data)
+		serializer = CompanyTouchSerializer(company, data=request.data, partial=True)
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data)
