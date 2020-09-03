@@ -3,41 +3,49 @@ from rest_framework import serializers
 
 from common.models.member_addr_model import Memberaddr
 from common.models.member_model import Member
+from sorl.thumbnail import get_thumbnail
 
 
 class MemberSerializer(serializers.ModelSerializer):
-    udate = serializers.DateTimeField(default=timezone.now)
-    last_date = serializers.DateTimeField(default=timezone.now)
+	udate = serializers.DateTimeField(default=timezone.now)
+	last_date = serializers.DateTimeField(default=timezone.now)
+	image = serializers.SerializerMethodField()
 
-    class Meta:
-        model = Member
-        fields = (
-            'id_member', 'name', 'nick_name', 'user_id', 'user_pw', 'tel', 'birth', 'email', 'gender', 'image', 'cdate',
-            'udate', 'last_date')
+	class Meta:
+		model = Member
+		fields = (
+			'id_member', 'name', 'nick_name', 'user_id', 'user_pw', 'tel', 'birth', 'email', 'gender', 'image', 'cdate',
+			'udate', 'last_date')
+
+	def get_image(self, obj):
+		Data = self.context['request'].META['HTTP_HOST'] + get_thumbnail(
+			obj.image, '800x800',
+			crop='center', quality=82).url
+		return Data
 
 
 class MemberReviseSerializer(serializers.ModelSerializer):
-    udate = serializers.DateTimeField(default=timezone.now)
+	udate = serializers.DateTimeField(default=timezone.now)
 
-    class Meta:
-        model = Member
-        fields = ('id_member', 'user_pw', 'udate')
+	class Meta:
+		model = Member
+		fields = ('id_member', 'user_pw', 'udate')
 
 
 class MemberTouchSerializer(serializers.ModelSerializer):
-    udate = serializers.DateTimeField(default=timezone.now)
+	udate = serializers.DateTimeField(default=timezone.now)
 
-    class Meta:
-        model = Member
-        fields = ('nick_name', 'tel', 'birth', 'email', 'image', 'gender', 'udate',)
-        read_only_fields = ['id_member',]
+	class Meta:
+		model = Member
+		fields = ('nick_name', 'tel', 'birth', 'email', 'image', 'gender', 'udate',)
+		read_only_fields = ['id_member', ]
 
 
 class memberAddrSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Memberaddr
-        fields = ('id_member', 'addr', 'distance', 'select')
-        # read_only_fields = ['user_id']
+	class Meta:
+		model = Memberaddr
+		fields = ('id_member', 'addr', 'distance', 'select')
+	# read_only_fields = ['user_id']
 
 # class MemberSerializer(serializers.Serializer):
 #     id_member = serializers.AutoField(primary_key=True)
