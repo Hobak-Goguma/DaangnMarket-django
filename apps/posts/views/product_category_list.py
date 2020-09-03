@@ -17,7 +17,9 @@ class ProductCategoryList(APIView):
 		product_code = list(CategoryCode.objects.filter(category='PRODUCT').values_list('code', flat=True))
 		promotion_code = list(CategoryCode.objects.filter(category='PROMOTION').values_list('code', flat=True))
 		data = {
-			"product_code": product_code,
-			"promotion_code": promotion_code
+			"category" : {
+			"product": product_code,
+			"promotion": promotion_code
+			}
 		}
 		return Response(data, status=status.HTTP_200_OK)
