@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from posts.models.company_model import Company
-from posts.serializers.company_serializer import CompanySerializer
+from posts.serializers.company_serializer import CompanySerializer, CompanySearchSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -13,7 +13,7 @@ def company_list(request):
 	"""
 	if request.method == 'GET':
 		company = Company.objects.all()
-		serializer = CompanySerializer(company, many=True, context={'request': request})
+		serializer = CompanySearchSerializer(company, many=True, context={'request': request})
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	elif request.method == 'POST':

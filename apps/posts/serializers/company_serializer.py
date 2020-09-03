@@ -39,7 +39,7 @@ class CompanySearchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Company
 		fields = ('id_company', 'id_member', 'name', 'addr', 'tel', 'info', 'code', 'views', 'thum')
-		read_only_fields = '__all__'
+		read_only_fields = ['__all__']
 
 	def get_thum(self, obj):
 		Data = CompanyImageSerializer(obj.thum.first()).data

@@ -40,8 +40,6 @@ def company_detail(request, id_company):
 		image = CompanyImage.objects.filter(id_company=id_company).order_by('id')
 		imageList = []
 		data = serializer.data
-		print(image.count())
-		print(image[0].image)
 		for i in range(image.count()):
 			imageDict = {}
 			imageDict['thum'] = request.META['HTTP_HOST'] + '/posts' + get_thumbnail(image[i].image, s, crop='center',
