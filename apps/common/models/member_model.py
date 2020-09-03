@@ -1,20 +1,19 @@
 import os
-from django.conf import settings
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from imagekit.models import ProcessedImageField
 
 
 class Member(models.Model):
-
 	def upload_to_id_image(instance, filename):
 		extension = os.path.splitext(filename)[1].lower()
 		if extension != '.jpg' or '.jpeg':
 			extension = '.jpg'
 		path = 'member/%(id)s_%(date_now)s' % {
 			'id': instance.user_id,
-			'date_now': datetime.now().date().strftime("%Y%m%d")}
+			'date_now': datetime.now().strftime("%Y%m%d%H%M%S")}
 		return '%(path)s%(extension)s' % {'path': path,
 		                                  'extension': extension}
 

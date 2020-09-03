@@ -57,10 +57,10 @@ def location_search_company(request):
 		paginated_company_sum = paginator.paginate_queryset(company_sum, request)
 
 		if paginated_company_sum is not None:
-			serializers = CompanySearchSerializer(paginated_company_sum, many=True)
+			serializers = CompanySearchSerializer(paginated_company_sum, many=True, context={'request': request})
 			return paginator.get_paginated_response(serializers.data)
 
-		serializer = CompanySearchSerializer(company_sum, many=True)
+		serializer = CompanySearchSerializer(company_sum, many=True, context={'request': request})
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	# 비회원
@@ -74,9 +74,9 @@ def location_search_company(request):
 			return Response(content, status=status.HTTP_204_NO_CONTENT)
 		paginated_company = paginator.paginate_queryset(company, request)
 		if paginated_company is not None:
-			serializers = CompanySearchSerializer(paginated_company, many=True)
+			serializers = CompanySearchSerializer(paginated_company, many=True, context={'request': request})
 			return paginator.get_paginated_response(serializers.data)
 
-		serializer = CompanySearchSerializer(company, many=True)
+		serializer = CompanySearchSerializer(company, many=True, context={'request': request})
 
 		return Response(serializer.data, status=status.HTTP_200_OK)

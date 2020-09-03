@@ -19,7 +19,7 @@ class Product(models.Model):
 	name: str = models.CharField(max_length=100)
 	price: int = models.IntegerField(default=0)
 	info: str = models.CharField(max_length=3000)
-	code: CategoryCode = models.ForeignKey('posts.CategoryCode', on_delete=models.DO_NOTHING, db_column='code',
+	code: CategoryCode.code = models.ForeignKey('posts.CategoryCode', on_delete=models.DO_NOTHING, db_column='code',
 	                                       related_name='product_code', default=CategoryCode.CODE.ETC)
 	views: int = models.IntegerField(default=0)
 	state: STATE = models.CharField(max_length=10, choices=STATE.choices, default=STATE.ON_SALE)
