@@ -5,20 +5,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.utils import json
 
-from posts.forms.product_upload_file_form import ProductUploadFileForm
-from posts.models.posts_product_image_model import ProductImage
-from posts.models.product_model import Product
+from posts.forms.company_upload_file_form import CompanyUploadFileForm
+from posts.models.company_image_model import CompanyImage
+from posts.models.company_model import Company
 
 
 @api_view(('POST', 'DELETE'))
-def product_upload_file(request):
+def company_upload_file(request):
 	"""
 	Product 사진 업로드 API
 
 	---
 	# 내용
 		- image_title : 파일의 원본이름
-		- id_product : Product 외래키
+		- id_company : Company 외래키
 		- image : 업로드 할 이미지
 	"""
 	# 이미지 업로드 제한갯수 최대 10개 (try)
@@ -28,20 +28,19 @@ def product_upload_file(request):
 		id_member = request.headers['id-member']
 		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
 		try:
-			id_product: int = Product.objects.filter(id_member=id_member).get(
-				id_product=request.POST['id_product']).id_product
-		except Product.DoesNotExist:
+			id_company: int = Company.objects.get(id_member=id_member).id_company
+		except Company.DoesNotExist:
 			content = {
-				"message": "올바른 상품이 없습니다.",
-				"result": request.POST['id_product']
+				"message": "올바른 업체가 없습니다.",
+				"result": request.POST['id_member']
 			}
-			return Response(content, status=status.HTTP_404_NOT_FOUND)
+			Response(content, status=status.HTTP_404_NOT_FOUND)
 
 		data = {
 			"image_title": image_title,
-			"id_product": id_product
+			"id_company": id_company
 		}
-		form = ProductUploadFileForm(data, request.FILES)
+		form = CompanyUploadFileForm(data, request.FILES)
 		if form.is_valid():
 			form.save()
 			content = {
@@ -59,16 +58,16 @@ def product_upload_file(request):
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')
 		received_json_data = json.loads(data)
-		id_product = received_json_data['id_product']
-		q = ProductImage.objects.filter(id_product=id_product).order_by('id_product_img').first()
-		q_count = ProductImage.objects.filter(id_product=id_product).count() - 1
+		id_member = received_json_data['id_member']
+		q = CompanyImage.objects.filter(id_company__id_member=id_member).order_by('id').first()
+		q_count = CompanyImage.objects.filter(id_company__id_member=id_member).count() - 1
 
 		try:
-			id: int = q.id_product_img
+			id: int = q.id
 		except AttributeError:
 			content = {
 				"message": "더이상 업로드된 사진이 없습니다.",
-				"result": {"id_company": id_product}
+				"result": {"id_company": id_member}
 			}
 			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
@@ -81,19 +80,3 @@ def product_upload_file(request):
 			}
 		}
 		return Response(content, status=status.HTTP_204_NO_CONTENT)
-
-
-'''
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            # file is saved
-            form.save()
-            return Response(status=status.HTTP_200_OK)
-        # else:
-        #     form = ModelFormWithFileField()
-        #     return Response(status=status.HTTP_404_NOT_FOUND)
-        # return Response(status=status.HTTP_404_NOT_FOUND)
-
-        # return render(request, 'image/upload.html', {'form': form})
-'''
