@@ -1,23 +1,21 @@
-from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from common.views import *
 from common import views
+from common.views import *
 
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
 	path('member/login', views.member_login, name='login'),
 	path('member/overlap', views.member_overlap, name='member_overlap'),
 	path('member/overlap/nick-name', views.nick_name_overlap, name='nick_name_overlap'),
-	# path('member/search', views.member_search, name='member_search'),
 	path('member/id/<id_member>', MemberDetail.as_view(), name='member_detail'),
 	path('member/info', views.member_info, name='member_touch'),
 	path('member/addr/id/<id_member>', views.member_addr, name='member_addr'),
 	path('member/addr/create', views.member_addr_create, name='member_addr_create'),
 	path('member/addr/select/<id_member>', views.member_addr_dis_update, name='member_addr_dis_update'),
-	# path('product/search', views.product_search, name='prduct_search'),
 	path('test', views.test, name='test'),
 	path('wishlist', views.wishlist_list, name='wishlist_list'),
 	path('wishlist/<id_member>', views.wishlist_detail, name='wishlist_detail'),
