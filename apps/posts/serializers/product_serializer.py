@@ -1,10 +1,8 @@
-from urllib.parse import urljoin
-
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
 
-from posts.models.product_model import Product
 from posts.models.posts_product_image_model import ProductImage
+from posts.models.product_model import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -13,7 +11,7 @@ class ProductSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Product
 		fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
-
+		read_only_fields = ['__all__']
 
 class ProductImageSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -37,9 +35,9 @@ class ProductSearchSerializer(serializers.ModelSerializer):
 				crop='center', quality=82).url
 		return Data
 
-class ProductTouchSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Product
-        fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
-        read_only_fields = ['id_product', 'id_member', 'views', 'state']
+class ProductTouchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Product
+		fields = ('id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr')
+		read_only_fields = ['id_product', 'id_member', 'views', 'state']

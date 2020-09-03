@@ -20,7 +20,7 @@ from rest_framework import authentication, permissions
 class MemberListView(APIView):
 	def get(self, request, format=None):
 		member = Member.objects.all()
-		serializer = MemberSerializer(member, many=True)
+		serializer = MemberSerializer(member, many=True, context={'request': request})
 		return Response(serializer.data)
 
 	def post(self, request, format=None):
