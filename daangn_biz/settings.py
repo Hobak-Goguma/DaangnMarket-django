@@ -150,6 +150,10 @@ TIME_ZONE = 'Asia/Seoul'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+SWAGGER_SETTINGS = {
+   'DEFAULT_INFO': 'import.path.to.urls.api_info',
+}
+
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'  # 항상 / 로 끝나도록 설정

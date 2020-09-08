@@ -6,6 +6,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from common import views
 from common.views import *
 
+#
+# router = DefaultRouter()
+# router.register(r'member-test', MemberViewSet, basename='member-test')
+
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
 	path('member/login', views.member_login, name='login'),
@@ -25,6 +29,7 @@ urlpatterns = [
 	path('member/upload', views.member_upload_file, name='member_upload_file'),
 ]
 
+# urlpatterns += router.urls
 urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
