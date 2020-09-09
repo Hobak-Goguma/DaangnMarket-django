@@ -1,6 +1,6 @@
 from drf_yasg import openapi
 
-# manual parameter
+# Manual Parameter
 page_field = openapi.Parameter(
     'page',
     openapi.IN_QUERY,

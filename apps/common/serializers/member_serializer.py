@@ -39,7 +39,7 @@ class MemberTouchSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Member
-		fields = ('nick_name', 'tel', 'birth', 'email', 'image', 'gender', 'udate',)
+		fields = ('nick_name', 'tel', 'birth', 'email', 'gender', 'udate',)
 		read_only_fields = ['id_member', ]
 
 
@@ -47,7 +47,7 @@ class memberAddrSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Memberaddr
 		fields = ('id_member', 'addr', 'distance', 'select')
-	# read_only_fields = ['user_id']
+# read_only_fields = ['user_id']
 
 # class MemberSerializer(serializers.Serializer):
 #     id_member = serializers.AutoField(primary_key=True)
