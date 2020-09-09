@@ -6,18 +6,15 @@ from rest_framework.response import Response
 
 from common.models.member_model import Member
 from common.serializers.member_serializer import MemberTouchSerializer
-from common.views.schema.member_touch_schema import member_touch_schema
+from common.views.schema.member_touch_schema import member_touch_schema, member_touch_example
 
 
 @swagger_auto_schema(method='put', request_body=openapi.Schema(
 	type=openapi.TYPE_OBJECT,
 	properties=member_touch_schema,
-	example={
-		'nick_name' : 'ddusi',
-		'tel' : '010-0000-0000',
-		'birth' : '1994-03-30',
-		'email' : 'ddusi@kakao.com',
-		'gender' : 'MALE'
+	example=member_touch_example,
+	responses={
+		200: 'Member Information Modified Successfully.'
 	}
 ))
 @api_view(['put'])

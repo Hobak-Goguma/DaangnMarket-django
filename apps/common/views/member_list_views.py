@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from common.models.member_model import Member
 from common.serializers.member_serializer import MemberSerializer
-from common.views.schema.member_list_schema import member_list_schema, member_list_parameter
+from common.views.schema.member_list_schema import member_list_schema, member_list_parameter, member_list_example
 
 
 # @swagger_auto_schema(
@@ -38,9 +38,10 @@ class MemberListView(APIView):
 	@swagger_auto_schema(request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties=member_list_schema,
+		example=member_list_example,
 		required=['name', 'user_id', 'user_pw', 'nick_name', 'tel', 'cdate']),
 		responses={
-			201: 'created a new member.'
+			201: 'Successfully created new members.'
 		})
 	def post(self, request, format=None):
 		serializer = MemberSerializer(data=request.data)

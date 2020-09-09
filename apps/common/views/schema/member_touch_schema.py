@@ -15,3 +15,12 @@ member_touch_schema = {
             'gender': openapi.Schema(type=openapi.TYPE_STRING, \
               description='성별 MALE / FEMALE'),
         }
+
+# Example
+member_touch_example = {
+		'nick_name' : 'ddusi',
+		'tel' : '010-0000-0000',
+		'birth' : '1994-03-30',
+		'email' : 'ddusi@kakao.com',
+		'gender' : 'MALE'
+	}

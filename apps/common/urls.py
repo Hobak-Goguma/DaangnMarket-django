@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
 
 from common import views
 from common.views import *
@@ -30,7 +29,6 @@ urlpatterns = [
 ]
 
 # urlpatterns += router.urls
-urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,

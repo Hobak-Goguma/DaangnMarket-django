@@ -43,3 +43,18 @@ member_list_schema = {
             'last_date': openapi.Schema(type=openapi.FORMAT_DATETIME, \
               description='마지막 로그인일 ex) 2020-09-08 02:26:55.248000'),
         }
+
+# Example
+member_list_example = {
+	    'name' : '김뚜시',
+	    'nick_name' : 'ddusi',
+	    'user_id' : 'ddusi',
+	    'user_pw' : '1234',
+	    'tel' : '010-0000-0000',
+	    'birth' : '1994-03-30',
+	    'email' : 'ddusi@kakao.com',
+	    'gender' : 'MALE',
+	    'cdate' : '',
+	    'udate' : '2020-08-30 18:23:48.824951',
+	    'last_data' : ''
+	}
