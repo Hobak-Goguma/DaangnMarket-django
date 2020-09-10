@@ -13,10 +13,10 @@ from common.views.schema.member_touch_schema import member_touch_schema, member_
 	type=openapi.TYPE_OBJECT,
 	properties=member_touch_schema,
 	example=member_touch_example,
-	responses={
-		200: 'Member Information Modified Successfully.'
-	}
-))
+	),
+    responses={
+    200: 'Member Information Modified Successfully.'
+    })
 @api_view(['put'])
 def member_info(request):
 	"""

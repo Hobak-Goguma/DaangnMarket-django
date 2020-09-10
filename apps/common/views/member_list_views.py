@@ -36,7 +36,6 @@ class MemberListView(APIView):
 		example=member_list_example,
 		required=['name', 'user_id', 'user_pw', 'nick_name', 'tel', 'cdate']
 	),
-		# operation_id='member',
 		responses={
 			201: 'Successfully created new members.'
 		})
