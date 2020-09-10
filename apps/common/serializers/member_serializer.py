@@ -32,6 +32,7 @@ class MemberReviseSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Member
 		fields = ('id_member', 'user_pw', 'udate')
+		read_only_fields = ['id_member', ]
 
 
 class MemberTouchSerializer(serializers.ModelSerializer):

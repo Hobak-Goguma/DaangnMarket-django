@@ -7,16 +7,9 @@ from rest_framework.views import APIView
 
 from common.models.member_model import Member
 from common.serializers.member_serializer import MemberSerializer
-from common.views.schema.member_list_schema import member_list_schema, member_list_parameter, member_list_example
+from common.views.schema.member_list_schema import member_list_schema, member_list_parameter, member_list_example, \
+	member_list_get_schema
 
-
-# @swagger_auto_schema(
-# 	operation_id='member',
-# 	request_body=MemberSerializer,
-# 	responses={
-# 		'200': MemberSerializer(),
-# 	}
-# )
 
 class MemberListView(APIView):
 	"""
@@ -25,7 +18,9 @@ class MemberListView(APIView):
 	---
 	"""
 
-	@swagger_auto_schema(manual_parameters=member_list_parameter)
+	@swagger_auto_schema(manual_parameters=member_list_parameter,
+	                     responses={200: member_list_get_schema}
+	                     )
 	def get(self, request, format=None):
 		paginator = PageNumberPagination()
 		paginator.page_size_query_param = "page_size"
@@ -39,7 +34,9 @@ class MemberListView(APIView):
 		type=openapi.TYPE_OBJECT,
 		properties=member_list_schema,
 		example=member_list_example,
-		required=['name', 'user_id', 'user_pw', 'nick_name', 'tel', 'cdate']),
+		required=['name', 'user_id', 'user_pw', 'nick_name', 'tel', 'cdate']
+	),
+		# operation_id='member',
 		responses={
 			201: 'Successfully created new members.'
 		})
