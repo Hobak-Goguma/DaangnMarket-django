@@ -1,27 +1,38 @@
 import os
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.utils import json
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
+from common.views.schema.member_upload_file_schema import member_upload_file_schema
 
 
-@api_view(('POST', 'DELETE'))
+@swagger_auto_schema(methods=['post','delete'],
+	request_body=openapi.Schema(
+	type=openapi.TYPE_OBJECT,
+	properties=member_upload_file_schema,
+	required=['id_member', 'image']
+),
+	responses={
+		201: 'File Upload Successful.'
+	})
+@api_view(('post', 'delete'))
 def member_upload_file(request):
 	"""
 	Product 사진 업로드 API
 
 	---
-	# 내용
-		- title : 저장 할 파일이름
-		- id_product : Product 외래키
-		- image : 업로드 할 이미지
+	image_title은 파일의 원본 이름이 저장됌.
 	"""
 	# 이미지 업로드 제한갯수 최대 10개 (try)
 	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
+	parser_classes = (MultiPartParser,)
 
 	if request.method == 'POST':
 		member: Member = Member.objects.get(id_member=request.POST['id_member'])
