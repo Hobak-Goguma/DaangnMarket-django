@@ -1,28 +1,28 @@
 import os
 
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
-from rest_framework.utils import json
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
-from common.views.schema.member_upload_file_schema import member_upload_file_schema
+from common.views.schema.member_upload_file_schema import member_upload_file_json, member_upload_file_parameter
 
 
-@swagger_auto_schema(methods=['post','delete'],
-	request_body=openapi.Schema(
-	type=openapi.TYPE_OBJECT,
-	properties=member_upload_file_schema,
-	required=['id_member', 'image']
-),
-	responses={
-		201: 'File Upload Successful.'
-	})
+@swagger_auto_schema(method='post',
+                     manual_parameters=member_upload_file_parameter,
+					 responses={
+					 	201: 'File Upload Successful.'
+					 })
+@swagger_auto_schema(method='delete',
+                     manual_parameters=member_upload_file_json,
+					 responses={
+					 	204: 'File Deleted Successful.'
+					 })
 @api_view(('post', 'delete'))
+@parser_classes([FormParser, MultiPartParser])
 def member_upload_file(request):
 	"""
 	Product 사진 업로드 API
@@ -32,10 +32,10 @@ def member_upload_file(request):
 	"""
 	# 이미지 업로드 제한갯수 최대 10개 (try)
 	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
-	parser_classes = (MultiPartParser,)
 
 	if request.method == 'POST':
-		member: Member = Member.objects.get(id_member=request.POST['id_member'])
+		id_member = request.POST['id_member']
+		member: Member = Member.objects.get(id_member=id_member)
 		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
 		form = MemberUploadFileForm({'image_title': image_title}, request.FILES, instance=member)
 		if form.is_valid():
@@ -48,9 +48,7 @@ def member_upload_file(request):
 		return Response(content, status=status.HTTP_200_OK)
 
 	elif request.method == 'DELETE':
-		data = request.body.decode('utf-8')
-		received_json_data = json.loads(data)
-		id_member = received_json_data['id_member']
+		id_member = request.POST['id_member']
 		try:
 			q = Member.objects.get(id_member=id_member)
 		except Member.DoesNotExist:
