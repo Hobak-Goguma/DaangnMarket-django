@@ -43,25 +43,45 @@ def member_addr(request, id_member):
         serializer = memberAddrSerializer(memberAddr, many=True)
         return Response(serializer.data)
 
-	elif request.method == 'DELETE':
-		Addr = request.data['addr']
-		# 1개인 경우 삭제 불가
-		if memberAddr.count() <= 1:
-			content = {
-				"message": "동네가 1개만 선택된 상태에서는 삭제를 할 수 없습니다.",
-				"result": {"addr": Addr}
-			}
-			return Response(content, status=status.HTTP_202_ACCEPTED)
-		# 삭제
-		q = memberAddr.get(addr=Addr)
-		q.delete()
-		# 다른 주소는 Y로 변경
-		Memberaddr.objects.filter(id_member=id_member).update(select="Y")
-		content = {
-			"message": "삭제 완료",
-			"result": {"addr": Addr}
-		}
-		return Response(content, status=status.HTTP_204_NO_CONTENT)
+    elif request.method == 'DELETE':
+        # 1개인 경우 삭제 불가
+        if memberAddr.count() <= 1:
+            content = {
+                "message": "동네가 1개만 선택된 상태에서는 삭제를 할 수 없습니다.",
+                "result": {}
+            }
+            return Response(content, status=status.HTTP_202_ACCEPTED)
+
+        # 제이슨 방식
+        data = request.body.decode('utf-8')
+        received_json_data = json.loads(data)
+        received_json_data['id_member'] = id_member
+
+        form = MemberAddrNonDistanceForm(received_json_data)
+        if form.is_valid():
+            if not form.user_addr():
+                content = {
+                    "message": "등록되지 않은 주소입니다",
+                    "result": {}
+                }
+                return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+            # 삭제
+            q = memberAddr.get(addr=form.cleaned_data['addr'])
+            q.delete()
+            # 다른 주소는 Y로 변경
+            memberAddr.update(select="Y")
+            content = {
+                "message": "삭제 완료",
+                "result": {"addr": form.cleaned_data['addr'] + " is deleted"}
+            }
+            return Response(content, status=status.HTTP_204_NO_CONTENT)
+        else:
+            content = {
+                "message": form.errors,
+                "result": {}
+            }
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
 
 @swagger_auto_schema(method='post', request_body=openapi.Schema(
@@ -168,7 +188,7 @@ def member_addr_dis_update(request):
     form = MemberAddrForm(data)
     # 유효성 검사
     if form.is_valid():
-        if not(form.user_addr()):
+        if not form.user_addr():
             content = {
                 "message": "등록되지 않은 주소입니다",
                 "result": {}
