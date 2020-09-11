@@ -1,5 +1,5 @@
-import json
-
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -7,12 +7,27 @@ from rest_framework.response import Response
 from common.models.location_model import Location
 from common.models.member_addr_model import Memberaddr
 from common.serializers.member_serializer import memberAddrSerializer
+from common.views.schema.member_addr_schema import member_addr_schema_create, member_addr_example, member_addr_schema, \
+	member_addr_example_create, member_addr_schema_update, member_addr_example_update
 
 
+@swagger_auto_schema(method='delete', request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties=member_addr_schema,
+		example=member_addr_example,
+		required=['addr']
+		),
+        operation_id='member_addr_delete',
+		responses={
+			204: 'Delete member address completed.'
+		})
 @api_view(['GET', 'DELETE'])
 def member_addr(request, id_member):
 	"""
-	멤버 주소 조회 수정, 삭제
+	특정멤버의 주소 조회, 삭제
+
+	---
+
 	"""
 	# try:
 	memberAddr = Memberaddr.objects.filter(id_member=id_member)
@@ -28,13 +43,7 @@ def member_addr(request, id_member):
 		return Response(serializer.data)
 
 	elif request.method == 'DELETE':
-		# 파라미터 get방식
-		# Addr = request.GET['addr']
-
-		# 제이슨 방식
-		data = request.body.decode('utf-8')
-		received_json_data = json.loads(data)
-		Addr = received_json_data['addr']
+		Addr = request.data['addr']
 		# 1개인 경우 삭제 불가
 		if memberAddr.count() <= 1:
 			content = {
@@ -54,17 +63,28 @@ def member_addr(request, id_member):
 		return Response(content, status=status.HTTP_204_NO_CONTENT)
 
 
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties=member_addr_schema_create,
+		example=member_addr_example_create,
+		required=['id_member', 'addr']
+		),
+        operation_id='member_addr_create',
+		responses={
+			201: 'Member Address Registration Completed.'
+		})
 @api_view(['POST'])
 def member_addr_create(request):
 	"""
-	멤버 주소 생성
+	특정멤버 주소 생성
+
+	---
+
 	"""
 
 	if request.method == 'POST':
-		data = request.body.decode('utf-8')
-		received_json_data = json.loads(data)
-		id_member = received_json_data['id_member']
-		addr = received_json_data['addr']
+		id_member = request.data['id_member']
+		addr = request.data['addr']
 		Person = Memberaddr.objects.filter(id_member=id_member)
 		# 주소 유효성 검사
 		try:
@@ -113,17 +133,28 @@ def member_addr_create(request):
 			return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(method='put', request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties=member_addr_schema_update,
+		example=member_addr_example_update,
+		required=['addr', 'dis']
+		),
+		responses={
+			200: 'Select member address & Set distance.'
+		})
 @api_view(['PUT'])
 def member_addr_dis_update(request, id_member):
 	"""
 	특정멤버 주소 선택 & 거리 견경
+
+	---
+
 	"""
-	Data = json.loads(request.body)
 	# 해당 멤버의 주소를 모두 N 으로 바꿈
 	member = Memberaddr.objects.filter(id_member=id_member)
 	member.update(select="N")
-	addr = Data['addr']
-	dis = Data['dis']
+	addr = request.data['addr']
+	dis = request.data['dis']
 	# 거리값 유효성 검사
 	if dis in [0, 2, 5, 10, 15]:
 		# 받은 주소의 선택값 "Y", 거리 변경
@@ -132,7 +163,7 @@ def member_addr_dis_update(request, id_member):
 		addrselect.distance = dis
 		addrselect.save()
 		serializer = memberAddrSerializer(member, many=True)
-		return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+		return Response(serializer.data, status=status.HTTP_200_OK)
 	else:
 		content = {
 			"message": "없는 거리값입니다. 유효한 거리값 : 0, 2, 5, 10 ,15(단위 : km)",

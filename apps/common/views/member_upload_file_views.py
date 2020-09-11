@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
-from common.views.schema.member_upload_file_schema import member_upload_file_json, member_upload_file_parameter
+from common.views.schema.member_upload_file_schema import member_upload_file_delete, member_upload_file_parameter
 
 
 @swagger_auto_schema(method='post',
@@ -17,7 +17,7 @@ from common.views.schema.member_upload_file_schema import member_upload_file_jso
 					 	201: 'File Upload Successful.'
 					 })
 @swagger_auto_schema(method='delete',
-                     manual_parameters=member_upload_file_json,
+                     manual_parameters=member_upload_file_delete,
 					 responses={
 					 	204: 'File Deleted Successful.'
 					 })
@@ -56,6 +56,7 @@ def member_upload_file(request):
 				"message": "회원 프로필 사진이 없습니다.",
 				"result": {"id_member": id_member}
 			}
+
 			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
 		q.delete_image()
