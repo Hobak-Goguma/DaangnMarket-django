@@ -31,20 +31,10 @@ class Migration(migrations.Migration):
                 ('score', models.FloatField()),
                 ('cdate', models.DateTimeField(auto_now_add=True)),
                 ('id_manner', models.ForeignKey(db_column='id_manner', on_delete=django.db.models.deletion.DO_NOTHING, to='common.Manner')),
-            ],
-            options={
-                'db_table': 'manner_log',
-            },
-        ),
-        migrations.CreateModel(
-            name='MannerReviewer',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('id_manner_log', models.ForeignKey(db_column='id_manner_log', on_delete=django.db.models.deletion.DO_NOTHING, to='common.MannerLog')),
                 ('reviewer', models.ForeignKey(db_column='reviewer', on_delete=django.db.models.deletion.DO_NOTHING, to='common.Member')),
             ],
             options={
-                'db_table': 'manner_reviewer',
+                'db_table': 'manner_log',
             },
         ),
         migrations.CreateModel(

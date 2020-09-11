@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
 from common import views
 from common.views import *
@@ -9,6 +11,10 @@ from common.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, 
 #
 # router = DefaultRouter()
 # router.register(r'member-test', MemberViewSet, basename='member-test')
+
+router = DefaultRouter()
+router.register('manner', views.MannerViewSet)
+
 
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
