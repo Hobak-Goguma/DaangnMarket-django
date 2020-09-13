@@ -1,9 +1,9 @@
 from django.utils import timezone
 from rest_framework import serializers
+from sorl.thumbnail import get_thumbnail
 
 from common.models.member_addr_model import Memberaddr
 from common.models.member_model import Member
-from sorl.thumbnail import get_thumbnail
 
 
 class MemberSerializer(serializers.ModelSerializer):
@@ -18,9 +18,11 @@ class MemberSerializer(serializers.ModelSerializer):
 			'udate', 'last_date')
 
 	def get_image(self, obj):
-		Data = self.context['request'].META['HTTP_HOST'] + get_thumbnail(
-			obj.image, '800x800',
-			crop='center', quality=82).url
+		Data = None
+		if obj.image:
+			Data = self.context['request'].META['HTTP_HOST'] + get_thumbnail(
+				obj.image, '800x800',
+				crop='center', quality=82).url
 		return Data
 
 
@@ -30,6 +32,7 @@ class MemberReviseSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Member
 		fields = ('id_member', 'user_pw', 'udate')
+		read_only_fields = ['id_member', ]
 
 
 class MemberTouchSerializer(serializers.ModelSerializer):
@@ -37,7 +40,7 @@ class MemberTouchSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Member
-		fields = ('nick_name', 'tel', 'birth', 'email', 'image', 'gender', 'udate',)
+		fields = ('nick_name', 'tel', 'birth', 'email', 'gender', 'udate',)
 		read_only_fields = ['id_member', ]
 
 
@@ -45,7 +48,7 @@ class memberAddrSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Memberaddr
 		fields = ('id_member', 'addr', 'distance', 'select')
-	# read_only_fields = ['user_id']
+# read_only_fields = ['user_id']
 
 # class MemberSerializer(serializers.Serializer):
 #     id_member = serializers.AutoField(primary_key=True)

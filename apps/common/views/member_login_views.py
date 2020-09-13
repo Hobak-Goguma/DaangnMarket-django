@@ -1,18 +1,32 @@
 import json
 
 from django.utils import timezone
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from common.models.member_model import Member
 from common.serializers.login_serializer import LoginSerializer
+from common.views.schema.member_login_schema import member_login_schema, member_login_example, member_login_post_schema
 
 
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+	type=openapi.TYPE_OBJECT,
+	properties=member_login_schema,
+	example=member_login_example,
+	),
+    responses={
+    200: member_login_post_schema
+    })
 @api_view(['POST'])
 def member_login(request):
     """
-    멤버 테이블 로그인
+    멤버 로그인
+
+    ---
+
     """
     if request.method == 'POST':
         try:
