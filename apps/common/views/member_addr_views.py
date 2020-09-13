@@ -52,12 +52,9 @@ def member_addr(request, id_member):
             }
             return Response(content, status=status.HTTP_202_ACCEPTED)
 
-        # 제이슨 방식
-        data = request.body.decode('utf-8')
-        received_json_data = json.loads(data)
-        received_json_data['id_member'] = id_member
+        request.data['id_member'] = id_member
 
-        form = MemberAddrNonDistanceForm(received_json_data)
+        form = MemberAddrNonDistanceForm(request.data)
         if form.is_valid():
             if not form.user_addr():
                 content = {
@@ -103,13 +100,12 @@ def member_addr_create(request):
 
 	"""
     if request.method == 'POST':
-        Data = request.body.decode('utf-8')
-        received_json_data = json.loads(Data)
-        received_json_data['id_member'] = request.headers['id-member']
-        Person = Memberaddr.objects.filter(id_member=received_json_data['id_member'])
+
+        request.data['id_member'] = request.headers['id-member']
         # 주소 유효성 검사
-        form = MemberAddrNonDistanceForm(received_json_data)
+        form = MemberAddrNonDistanceForm(request.data)
         if form.is_valid():
+            Person = Memberaddr.objects.filter(id_member=form.cleaned_data['id_member'])
             # Case 1. 주소가 0개인 회원
             if Person.count() == 0:
                 form.save()
@@ -138,7 +134,7 @@ def member_addr_create(request):
                     content = {
                         "message": "등록 완료",
                         "result": {
-                             "등록된 주소 : " + form.cleaned_data['addr']
+                            "등록된 주소 : " + form.cleaned_data['addr']
                         }
                     }
                     return Response(content, status=status.HTTP_201_CREATED)
@@ -175,17 +171,10 @@ def member_addr_dis_update(request):
 	"""
 
     id_member = request.headers["id-member"]
-    Data = json.loads(request.body)
     member = Memberaddr.objects.filter(id_member=id_member)
-    addr = Data['addr']
-    dis = Data['dis']
 
-    data = {
-        "id_member": id_member,
-        "addr": addr,
-        "distance": dis
-    }
-    form = MemberAddrForm(data)
+    request.data['id_member'] = id_member
+    form = MemberAddrForm(request.data)
     # 유효성 검사
     if form.is_valid():
         if not form.user_addr():
