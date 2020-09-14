@@ -22,11 +22,18 @@ def company_upload_file(request):
 		- image : 업로드 할 이미지
 	"""
 	# 이미지 업로드 제한갯수 최대 10개 (try)
-	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
+	# ImageFormSet = modelformset_factory(CompanyImage, form=CompanyUploadFileForm, extra=10)
 
 	if request.method == 'POST':
 		id_member = request.headers['id-member']
-		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
+		try:
+			image_title: str = os.path.splitext(str(request.FILES['image']))[0]
+		except KeyError:
+			content = {
+				"message": "데이터 형식이 맞지 않습니다.",
+			}
+			return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
 		try:
 			id_company: int = Company.objects.get(id_member=id_member).id_company
 		except Company.DoesNotExist:
@@ -34,26 +41,32 @@ def company_upload_file(request):
 				"message": "올바른 업체가 없습니다.",
 				"result": request.POST['id_member']
 			}
-			Response(content, status=status.HTTP_404_NOT_FOUND)
+			return Response(content, status=status.HTTP_404_NOT_FOUND)
 
 		data = {
 			"image_title": image_title,
 			"id_company": id_company
 		}
 		form = CompanyUploadFileForm(data, request.FILES)
-		if form.is_valid():
+		try:
+			form.is_valid()
 			form.save()
-			content = {
-				"message": "파일 업로드 완료",
-				"result": {"image_title": image_title}
-			}
-			return Response(content, status=status.HTTP_200_OK)
 
-		else:
+		except ValueError:
 			content = {
-				"message": "데이터 형식이 맞지 않습니다.",
+				"message": "Allow up to 10 images.",
+				"result": CompanyImage.objects.filter(id_company=id_company).count()
 			}
 			return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+		content = {
+			"message": "파일 업로드 완료",
+			"result": {"image_title": image_title}
+		}
+		return Response(content, status=status.HTTP_200_OK)
+
+
+
 
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')

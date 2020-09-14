@@ -26,7 +26,14 @@ def product_upload_file(request):
 
 	if request.method == 'POST':
 		id_member = request.headers['id-member']
-		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
+		try:
+			image_title: str = os.path.splitext(str(request.FILES['image']))[0]
+		except KeyError:
+			content = {
+				"message": "데이터 형식이 맞지 않습니다.",
+			}
+			return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
 		try:
 			id_product: int = Product.objects.filter(id_member=id_member).get(
 				id_product=request.POST['id_product']).id_product
@@ -42,19 +49,21 @@ def product_upload_file(request):
 			"id_product": id_product
 		}
 		form = ProductUploadFileForm(data, request.FILES)
-		if form.is_valid():
+		try:
+			form.is_valid()
 			form.save()
+		except ValueError:
 			content = {
-				"message": "파일 업로드 완료",
-				"result": {"image_title": image_title}
-			}
-			return Response(content, status=status.HTTP_200_OK)
-
-		else:
-			content = {
-				"message": "데이터 형식이 맞지 않습니다.",
+				"message": "Allow up to 10 images.",
+				"result": ProductImage.objects.filter(id_product=id_product).count()
 			}
 			return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+		content = {
+			"message": "파일 업로드 완료",
+			"result": {"image_title": image_title}
+		}
+		return Response(content, status=status.HTTP_200_OK)
 
 	elif request.method == 'DELETE':
 		data = request.body.decode('utf-8')

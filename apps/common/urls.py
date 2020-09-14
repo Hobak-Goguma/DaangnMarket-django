@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
 
 from common import views
 from common.views import *
+
+#
+# router = DefaultRouter()
+# router.register(r'member-test', MemberViewSet, basename='member-test')
 
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
@@ -25,7 +28,7 @@ urlpatterns = [
 	path('member/upload', views.member_upload_file, name='member_upload_file'),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns += router.urls
 
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,

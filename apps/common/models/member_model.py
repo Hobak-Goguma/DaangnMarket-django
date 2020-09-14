@@ -23,7 +23,7 @@ class Member(models.Model):
 	user_pw: str = models.CharField(max_length=300)
 	nick_name: str = models.CharField(max_length=30)
 	tel: str = models.CharField(max_length=20)
-	birth = models.DateField(null=True, blank=True)
+	birth: datetime = models.DateField(null=True, blank=True)
 	email: str = models.CharField(max_length=30, blank=True)
 	gender: str = models.CharField(max_length=6, blank=True)
 	cdate: datetime = models.DateTimeField(auto_now_add=True)
