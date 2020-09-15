@@ -52,9 +52,10 @@ def member_addr(request, id_member):
             }
             return Response(content, status=status.HTTP_202_ACCEPTED)
 
-        request.data['id_member'] = id_member
+        data = request.data.copy()
+        data['id_member'] = id_member
 
-        form = MemberAddrNonDistanceForm(request.data)
+        form = MemberAddrNonDistanceForm(data)
         if form.is_valid():
             if not form.user_addr():
                 content = {
@@ -101,9 +102,10 @@ def member_addr_create(request):
 	"""
     if request.method == 'POST':
 
-        request.data['id_member'] = request.headers['id-member']
+        data = request.data.copy()
+        data['id_member'] = request.headers['id-member']
         # 주소 유효성 검사
-        form = MemberAddrNonDistanceForm(request.data)
+        form = MemberAddrNonDistanceForm(data)
         if form.is_valid():
             Person = Memberaddr.objects.filter(id_member=form.cleaned_data['id_member'])
             # Case 1. 주소가 0개인 회원
