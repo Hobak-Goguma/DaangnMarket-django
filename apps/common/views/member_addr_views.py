@@ -25,12 +25,11 @@ from common.forms.member_addr_form import MemberAddrNonDistanceForm
 		})
 @api_view(['GET', 'DELETE'])
 def member_addr(request, id_member):
-	"""
-	특정멤버의 주소 조회, 삭제
+    """
+    특정멤버의 주소 조회, 삭제
 
-	---
-
-	"""
+    ---
+    """
     memberAddr = Memberaddr.objects.filter(id_member=id_member)
     if memberAddr.count() == 0:
         content = {
@@ -94,12 +93,12 @@ def member_addr(request, id_member):
 		})
 @api_view(['POST'])
 def member_addr_create(request):
-	"""
-	특정멤버 주소 생성
+    """
+    특정멤버 주소 생성
 
-	---
+    ---
 
-	"""
+    """
     if request.method == 'POST':
 
         data = request.data.copy()
@@ -175,8 +174,10 @@ def member_addr_dis_update(request):
     id_member = request.headers["id-member"]
     member = Memberaddr.objects.filter(id_member=id_member)
 
-    request.data['id_member'] = id_member
-    form = MemberAddrForm(request.data)
+    data = request.data.copy()
+    data['id_member'] = id_member
+    form = MemberAddrForm(data)
+
     # 유효성 검사
     if form.is_valid():
         if not form.user_addr():
