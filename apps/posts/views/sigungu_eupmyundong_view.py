@@ -32,14 +32,12 @@ class SigunguList(APIView):
 
 
 class EupmyundongList(APIView):
-    def __init__(self, sigungu, **kwargs):
-        super().__init__(**kwargs)
-        self.gu = Location.objects.filter(gu=sigungu)
-        self.dong_list = list(Location.objects.filter(gu=sigungu).values_list('dong', flat=True).distinct())
-        self.dong_list = list(Location.objects.filter(gu=sigungu).values_list('dong', flat=True).distinct())
+    def get(self, request, sido, sigungu):
 
-    def get(self, request, sigungu):
-        if self.gu.count() == 0:
+        gu = Location.objects.filter(gu=sigungu)
+        dong_list = list(Location.objects.filter(gu=sigungu).values_list('dong', flat=True).distinct())
+
+        if gu.count() == 0:
             content = {
                 "message": "해당 구는 없습니다.",
                 "result": {}
@@ -47,7 +45,7 @@ class EupmyundongList(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
 
         allow_sido = ["서울특별시"]
-        if self.sido not in allow_sido:
+        if sido not in allow_sido:
             content = {
                 "message": "현재 " + str(allow_sido) + " 지역만 서비스 진행 중입니다 !",
                 "result": {}
@@ -56,7 +54,7 @@ class EupmyundongList(APIView):
 
         content = {
             "message": sigungu + "의 동 리스트입니다.",
-            "result": {sigungu: self.dong_list}
+            "result": {sigungu: dong_list}
         }
         return Response(content, status=status.HTTP_200_OK)
 
