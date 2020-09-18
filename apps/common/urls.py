@@ -38,7 +38,8 @@ urlpatterns = [
 	path('eupmyundong/<str:sido>', SidoEupmyundongList.as_view(), name='sido_eupmyundong_list'),
 ]
 
-# urlpatterns += router.urls
+urlpatterns += router.urls
+# urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,
