@@ -31,33 +31,33 @@ def location_search_company(request):
     paginator.page_size_query_param = "page_size"
     Search = request.GET['q']
 
-    #회원 검색
-    if 'id-member' in request.headers :
-        #주소 유무 체크
-        try :
-            memberaddr = Memberaddr.objects.filter(id_member = request.headers['id-member']).get(select = 'Y')
-            addr =  memberaddr.addr
+    # 회원 검색
+    if 'id-member' in request.headers:
+        # 주소 유무 체크
+        try:
+            memberaddr = Memberaddr.objects.filter(id_member=request.headers['id-member']).get(select='Y')
+            addr = memberaddr.addr
             dis = memberaddr.distance
-        #설정된 주소가 없을
-        except Memberaddr.DoesNotExist :
+        # 설정된 주소가 없을
+        except Memberaddr.DoesNotExist:
             content = {
-                "message" : "설정된 주소가 없습니다. 주소를 설정해 주세요.",
-                "result" : {}
-                    }
-            return Response(content,status=status.HTTP_204_NO_CONTENT)
+                "message": "설정된 주소가 없습니다. 주소를 설정해 주세요.",
+                "result": {}
+            }
+            return Response(content, status=status.HTTP_204_NO_CONTENT)
 
-        #근처 주소 검색
-        location = NearbyLocation.objects.filter(dong = addr).filter(distance = dis)
-        company_sum = Company.objects.filter(name__contains = Search).filter(addr = addr)
-        for i in location :
-            company = Company.objects.filter(name__contains = Search).filter(addr = i.nearby_dong)
+        # 근처 주소 검색
+        location = NearbyLocation.objects.filter(dong=addr).filter(distance=dis)
+        company_sum = Company.objects.filter(name__contains=Search).filter(addr=addr)
+        for i in location:
+            company = Company.objects.filter(name__contains=Search).filter(addr=i.nearby_dong)
             company_sum = company_sum | company
-        if company_sum.count() == 0 :
+        if company_sum.count() == 0:
             content = {
-                "message" : "검색한 업체가 없습니다.",
-                "result" : {"입력한 검색어" : Search}
-                    }
-            return Response(content,status=status.HTTP_204_NO_CONTENT)
+                "message": "검색한 업체가 없습니다.",
+                "result": {"입력한 검색어": Search}
+            }
+            return Response(content, status=status.HTTP_204_NO_CONTENT)
         # 페이지 적용된 쿼리셋
         paginated_company_sum = paginator.paginate_queryset(company_sum, request)
         # 페이지 파라미터 (page, page_size) 있을 경우
@@ -68,18 +68,18 @@ def location_search_company(request):
             return paginator.get_paginated_response(serializers.data)
 
         # # 페이지 파라미터 없을 경우
-        serializer = CompanySearchSerializer(company_sum, many =True)
+        serializer = CompanySearchSerializer(company_sum, many=True)
         return Response(serializer.data)
-    #비회원
-    else :
-        #모든 제품 검색
-        company = Company.objects.filter(name__contains = Search)
-        if company.count() == 0 :
+    # 비회원
+    else:
+        # 모든 제품 검색
+        company = Company.objects.filter(name__contains=Search)
+        if company.count() == 0:
             content = {
-            "message" : "검색한 없체가 없습니다.",
-            "result" : {"입력한 검색어" : Search}
-                }
-            return Response(content,status=status.HTTP_204_NO_CONTENT)
+                "message": "검색한 없체가 없습니다.",
+                "result": {"입력한 검색어": Search}
+            }
+            return Response(content, status=status.HTTP_204_NO_CONTENT)
         serializer = CompanySearchSerializer(company, many=True)
         # 페이지 적용된 쿼리셋
         paginated_company = paginator.paginate_queryset(company, request)
@@ -91,6 +91,6 @@ def location_search_company(request):
             return paginator.get_paginated_response(serializers.data)
 
         # # 페이지 파라미터 없을 경우
-        serializer = CompanySearchSerializer(company, many =True)
+        serializer = CompanySearchSerializer(company, many=True)
 
         return Response(serializer.data)
