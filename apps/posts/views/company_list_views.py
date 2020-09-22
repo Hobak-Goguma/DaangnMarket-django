@@ -34,7 +34,7 @@ def company_list(request):
     if request.method == 'GET':
         paginator = PageNumberPagination()
         paginator.page_size_query_param = "page_size"
-        queryset = Company.objects.all()
+        queryset = Company.objects.all().order_by('-cdate')
         paginated_company = paginator.paginate_queryset(queryset, request)
         serializer = CompanySearchSerializer(paginated_company, many=True, context={'request': request})
         return paginator.get_paginated_response(serializer.data)
