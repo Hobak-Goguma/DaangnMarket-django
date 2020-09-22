@@ -4,7 +4,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from posts.views.schema.location_search_company_schema import *
+from posts.views.schema.location_search_company_schema import location_search_company_parameter
+
 from common.models.member_addr_model import Memberaddr
 from common.models.nearby_Location_model import NearbyLocation
 from posts.models.company_model import Company
@@ -14,7 +15,7 @@ from posts.serializers.company_serializer import CompanySearchSerializer
 @swagger_auto_schema(method='get',
                      manual_parameters=location_search_company_parameter,
                      responses={
-                         200: '동네 업체 조회 성공',
+                         200: '동네 업체 검색 성공',
                          204: '검색한 업체가 없습니다.'
                      })
 @api_view(['GET'])
