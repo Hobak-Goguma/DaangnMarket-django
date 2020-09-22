@@ -39,7 +39,7 @@ product_list_example_create = {
     'id_member': '1',
     'name': '자전거',
     'addr': '가락1동',
-    'price': '23100',
+    'price': 23100,
     'info': '3번 탔어요',
     'code': 'SPORTS'
 }

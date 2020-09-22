@@ -8,15 +8,15 @@ id_member = openapi.Parameter(
     type=openapi.TYPE_STRING
 )
 
-s_field = openapi.Parameter(
-    'size',
+s = openapi.Parameter(
+    's',
     openapi.IN_QUERY,
     description='This is the size of images.',
     type=openapi.TYPE_STRING
 )
 
 company_detail_put_parameter = [id_member]
-company_detail_get_parameter = [id_member, s_field]
+company_detail_get_parameter = [id_member, s]
 
 # Schema
 company_detail_schema = {

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from sorl.thumbnail import get_thumbnail
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from posts.views.schema.company_detail import company_detail_put_parameter, company_detail_get_parameter, \
+from posts.views.schema.company_detail_schema import company_detail_put_parameter, company_detail_get_parameter, \
     company_detail_example, company_detail_schema
 
 from posts.models.company_image_model import CompanyImage
