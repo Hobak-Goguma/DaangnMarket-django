@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 from posts import views
 from posts.views.product_category_list import ProductCategoryList
 from posts.views.product_my_list_views import ProductMyList
+from posts.views.recommend_product_list_views import RecommendProductListViewSet
 
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
@@ -24,6 +26,11 @@ urlpatterns = [
     path('eupmyundong/<str:sido>/<str:sigungu>', views.eupmyundong, name='eupmyundong'),
     path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
 ]
+
+router = DefaultRouter()
+router.register('recommend', RecommendProductListViewSet)
+urlpatterns += router.urls
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
