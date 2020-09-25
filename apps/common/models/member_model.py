@@ -53,6 +53,7 @@ class Member(models.Model):
 		if not self.pk:
 			user = User.objects.create_user(username=self.user_id, email=self.email, first_name=self.name)
 			user.set_password(self.user_pw)
+			user.save()
 			self.auth = user
 			self.user_pw = user.password
 		super(Member, self).save(*args, **kwargs)
