@@ -51,8 +51,12 @@ class Member(models.Model):
 
 	def save(self, *args, **kwargs):
 		if not self.pk:
-			user = User.objects.create_user(username=self.user_id, email=self.email)
+			user = User.objects.create_user(username=self.user_id, email=self.email, first_name=self.name)
 			user.set_password(self.user_pw)
 			self.auth = user
 			self.user_pw = user.password
 		super(Member, self).save(*args, **kwargs)
+
+	def delete(self, using=None, keep_parents=False):
+		User.objects.get(auth__id_member=self.id_member).delete()
+		super(Member, self).delete()
