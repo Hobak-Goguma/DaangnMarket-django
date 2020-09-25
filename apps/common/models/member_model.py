@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from imagekit.models import ProcessedImageField
 
@@ -35,6 +36,9 @@ class Member(models.Model):
 		upload_to=upload_to_id_image,
 		format='JPEG',
 	)
+	auth: int = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, db_column='auth', related_name='auth', default=None, blank=True, null=True)
+
+	# objects = MemberManager()
 
 	class Meta:
 		db_table = 'member'
@@ -44,3 +48,11 @@ class Member(models.Model):
 		self.image = None
 		self.image_title = ''
 		self.save()
+
+	def save(self, *args, **kwargs):
+		if not self.pk:
+			user = User.objects.create_user(username=self.user_id, email=self.email)
+			user.set_password(self.user_pw)
+			self.auth = user
+			self.user_pw = user.password
+		super(Member, self).save(*args, **kwargs)
