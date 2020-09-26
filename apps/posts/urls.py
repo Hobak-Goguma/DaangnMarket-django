@@ -5,8 +5,6 @@ from django.urls import path
 from posts import views
 from posts.views.product_category_list import ProductCategoryList
 from posts.views.product_my_list_views import ProductMyList
-from posts.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
-
 
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
@@ -22,9 +20,6 @@ urlpatterns = [
     path('product/my-list', ProductMyList.as_view(), name='my_product'),
     path('product/<int:id_product>', views.product_detail, name='prduct_detail'),
     path('product/category-list', ProductCategoryList.as_view(), name='ProductCategoryList'),
-    path('sigungu/<str:sido>', SigunguList.as_view(), name='sigungu'),
-    path('eupmyundong/<str:sido>/<str:sigungu>', EupmyundongList.as_view(), name='eupmyundong'),
-    path('eupmyundong/<str:sido>', SidoEupmyundongList.as_view(), name='sido_eupmyundong_list'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
