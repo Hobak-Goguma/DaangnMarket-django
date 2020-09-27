@@ -20,9 +20,6 @@ urlpatterns = [
     path('product/my-list', ProductMyList.as_view(), name='my_product'),
     path('product/<int:id_product>', views.product_detail, name='prduct_detail'),
     path('product/category-list', ProductCategoryList.as_view(), name='ProductCategoryList'),
-    path('sigungu/<str:sido>', views.sigungu, name='sigungu'),
-    path('eupmyundong/<str:sido>/<str:sigungu>', views.eupmyundong, name='eupmyundong'),
-    path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
