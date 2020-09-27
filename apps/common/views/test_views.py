@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from common.helper.helper_jwt_get_user import HelperJwtGetUser
+from common.helper.helper_jwt_get_user import helper_jwt_get_user
 
 
 class TestView(APIView):
@@ -18,6 +18,6 @@ class TestView(APIView):
 		# print(j.get_raw_token(self, j.get_header(self, request)))
 		# print(j.get_validated_token(self, j.get_raw_token(self, j.get_header(self, request))))
 		# print(type(j.get_validated_token(self, j.get_raw_token(self, j.get_header(self, request)))))
-		print(HelperJwtGetUser(self, request))
+		print(helper_jwt_get_user(self, request))
 
 		return Response()

@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication as j
 
 
-def HelperJwtGetUser(self, request):
+def helper_jwt_get_user(self, request):
 	"""
 	www_authenticate_realm = 'api'
 	HelperJwtGetUser(self, request)
