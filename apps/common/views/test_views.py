@@ -1,25 +1,23 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from posts.models.product_model import Product
-from posts.serializers.product_serializer import ProductSearchSerializer
+from helper.helper_jwt_get_user import HelperJwtGetUser
 
 
-@api_view(['GET'])
-def test(request):
-    """
-    테스트용 api
-    """
-    if request.method == 'GET':
-        product = Product.objects.filter(name__contains = '자전거')
-        serializer = ProductSearchSerializer(product, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class TestView(APIView):
+	"""
+	테스트용 API
+	---
 
-    # if request.method == 'GET':
-    #     product = ProductImage.objects.filter(id_product=44).order_by('id_product_img')
-    #     print('=========================================')
-    #     print(product)
-    #     serializer = ProductImageSerializer(product, many=True)
-    #     # print(serializer)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
+	"""
+	www_authenticate_realm = 'api'
+
+	def post(self, request):
+		# JWToken_user = j.get_user(self, j.get_validated_token(self, request.headers['Authorization'].split(' ')[1]))
+		# print(j.get_header(self, request))
+		# print(j.get_raw_token(self, j.get_header(self, request)))
+		# print(j.get_validated_token(self, j.get_raw_token(self, j.get_header(self, request))))
+		# print(type(j.get_validated_token(self, j.get_raw_token(self, j.get_header(self, request)))))
+		print(HelperJwtGetUser(self, request))
+
+		return Response()
