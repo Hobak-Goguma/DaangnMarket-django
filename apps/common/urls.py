@@ -9,6 +9,7 @@ from common.views import *
 # router = DefaultRouter()
 # router.register(r'member-test', MemberViewSet, basename='member-test')
 
+
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
 	path('member/login', views.member_login, name='login'),
@@ -19,7 +20,7 @@ urlpatterns = [
 	path('member/addr/id/<id_member>', views.member_addr, name='member_addr'),
 	path('member/addr/create', views.member_addr_create, name='member_addr_create'),
 	path('member/addr/select', views.member_addr_dis_update, name='member_addr_dis_update'),
-	path('test', views.test, name='test'),
+	path('test', TestView.as_view(), name='test'),
 	path('wishlist', views.wishlist_list, name='wishlist_list'),
 	path('wishlist/<id_member>', views.wishlist_detail, name='wishlist_detail'),
 	path('product/selling/<id_member>', views.selling_product_list, name='selling_product_list'),
