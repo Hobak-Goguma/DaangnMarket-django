@@ -24,10 +24,12 @@ class RecommendProductListViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = Pagination
 
     def list(self, request):
+        # 비회원 - 모든 추천 매물 리스트
         if 'id-member' not in request.headers:
             page = self.paginate_queryset(self.queryset)
             serializer = ProductSearchSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+        # 회원 로직 - 회원이 설정한 주소로 필터링 된 추천 매물 리스트
         id_member = request.headers['id-member']
         try:
             Member.objects.get(id_member=id_member)
@@ -48,7 +50,9 @@ class RecommendProductListViewSet(viewsets.ReadOnlyModelViewSet):
                 "result": {}
                     }
             return Response(content,status=status.HTTP_204_NO_CONTENT)
-        nearby_dong_list = list(NearbyLocation.objects.filter(dong=addr).filter(distance=dis).values_list('nearby_dong', flat=True))
+        # nearby_dong_list : 회원이 설정한 동네와 거리를 통해 근처동을 뽑은 리스트
+        # recommend_product_list : 근처 동으로 필터링 된 추천 매물 리스트
+        nearby_dong_list = [addr]+list(NearbyLocation.objects.filter(dong=addr).filter(distance=dis).values_list('nearby_dong', flat=True))
         recommend_product_list = self.queryset.filter(addr__in=nearby_dong_list)
         page = self.paginate_queryset(recommend_product_list)
         serializer = ProductSearchSerializer(page, many=True)

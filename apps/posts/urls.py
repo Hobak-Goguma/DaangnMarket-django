@@ -8,6 +8,9 @@ from posts.views.product_category_list import ProductCategoryList
 from posts.views.product_my_list_views import ProductMyList
 from posts.views.recommend_product_list_views import RecommendProductListViewSet
 
+router = DefaultRouter()
+router.register('recommend', RecommendProductListViewSet)
+
 urlpatterns = [
     # path('product/<title>', views.product_thumbnail, name='product_thumbnail'),
     path('product/upload', views.product_upload_file, name='product_upload'),
@@ -27,8 +30,6 @@ urlpatterns = [
     path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
 ]
 
-router = DefaultRouter()
-router.register('recommend', RecommendProductListViewSet)
 urlpatterns += router.urls
 
 if settings.DEBUG:
