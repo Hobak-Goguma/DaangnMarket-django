@@ -17,6 +17,7 @@ django-filter==2.3.0
 django-imagekit==4.0.2
 django-rest-swagger==2.2.0
 djangorestframework==3.11.0
+djangorestframework-simplejwt==4.4.0
 drf-yasg==1.17.1
 httpie==2.1.0
 idna==2.9
@@ -37,6 +38,7 @@ pilkit==2.0
 Pillow==7.2.0
 pycparser==2.20
 Pygments==2.6.1
+PyJWT==1.7.1
 pylint==2.5.3
 PyMySQL==0.9.3
 pyparsing==2.4.7
