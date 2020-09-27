@@ -13,10 +13,12 @@ from posts.serializers.company_serializer import CompanySerializer, CompanySearc
 
 @swagger_auto_schema(method='get',
                      manual_parameters=company_list_parameter,
+                     tags=['company'],
                      responses={
                          200: '동네 업체 조회 성공'
                      })
 @swagger_auto_schema(method='post',
+                     tags=['company'],
                      request_body=openapi.Schema(
                          type=openapi.TYPE_OBJECT,
                          properties=company_list_schema_create,

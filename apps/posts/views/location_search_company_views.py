@@ -13,6 +13,7 @@ from posts.serializers.company_serializer import CompanySearchSerializer
 
 
 @swagger_auto_schema(method='get',
+                     tags=['company'],
                      manual_parameters=location_search_company_parameter,
                      responses={
                          200: '동네 업체 검색 성공',

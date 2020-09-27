@@ -14,11 +14,13 @@ from posts.models.product_model import Product
 
 
 @swagger_auto_schema(method='post',
+                     tags=['product'],
                      manual_parameters=product_upload_file_parameter,
                      responses={
                          201: 'File Upload Successful.'
                      })
 @swagger_auto_schema(method='delete',
+                     tags=['product'],
                      manual_parameters=product_upload_file_delete,
                      responses={
                          204: 'File Deleted Successful.'

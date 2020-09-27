@@ -13,11 +13,13 @@ from posts.serializers.product_serializer import ProductSearchSerializer, Produc
 
 
 @swagger_auto_schema(method='get',
+                     tags=['product'],
                      manual_parameters=product_list_parameter,
                      responses={
                          200: '상품 조회 성공'
                      })
 @swagger_auto_schema(method='post',
+                     tags=['product'],
                      request_body=openapi.Schema(
                          type=openapi.TYPE_OBJECT,
                          properties=product_list_schema_create,

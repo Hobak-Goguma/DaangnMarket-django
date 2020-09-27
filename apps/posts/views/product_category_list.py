@@ -15,6 +15,7 @@ class ProductCategoryList(APIView):
 	"""
 
     @swagger_auto_schema(operation_id='product_my_list',
+                         tags=['product'],
                          responses={
                              200: 'Success'
                          })

@@ -13,6 +13,7 @@ from posts.serializers.product_serializer import ProductSerializer, ProductTouch
 
 
 @swagger_auto_schema(method='put',
+                     tags=['product'],
                      manual_parameter=product_detail_put_parameter,
                      request_body=openapi.Schema(
                          type=openapi.TYPE_OBJECT,
@@ -24,11 +25,13 @@ from posts.serializers.product_serializer import ProductSerializer, ProductTouch
                          200: 'Update Successfully'
                      })
 @swagger_auto_schema(method='get',
+                     tags=['product'],
                      manual_parameters=product_detail_get_parameter,
                      responses={
                          200: 'Detail Successfully'
                      })
 @swagger_auto_schema(method='delete',
+                     tags=['product'],
                      responses={
                          204: 'Delete Successfully'
                      })

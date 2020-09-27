@@ -13,6 +13,7 @@ from posts.serializers.product_serializer import ProductSearchSerializer
 
 
 @swagger_auto_schema(method='get',
+                     tags=['product'],
                      manual_parameters=location_search_product_parameter,
                      responses={
                          200: '상품 검색 성공',

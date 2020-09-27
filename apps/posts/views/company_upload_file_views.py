@@ -14,11 +14,13 @@ from posts.views.schema.company_upload_file_schema import company_upload_file_de
 
 
 @swagger_auto_schema(method='post',
+                     tags=['company'],
                      manual_parameters=company_upload_file_parameter,
                      responses={
                          201: 'File Upload Successful.'
                      })
 @swagger_auto_schema(method='delete',
+                     tags=['company'],
                      manual_parameters=company_upload_file_delete,
                      responses={
                          204: 'File Deleted Successful.'

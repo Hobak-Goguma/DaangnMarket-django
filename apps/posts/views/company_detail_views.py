@@ -13,6 +13,7 @@ from posts.serializers.company_serializer import CompanySerializer, CompanyTouch
 
 
 @swagger_auto_schema(method='put',
+                     tags=['company'],
                      manual_parameter=company_detail_put_parameter,
                      request_body=openapi.Schema(
                          type=openapi.TYPE_OBJECT,
@@ -24,11 +25,13 @@ from posts.serializers.company_serializer import CompanySerializer, CompanyTouch
                          200: 'Update Successfully'
                      })
 @swagger_auto_schema(method='get',
+                     tags=['company'],
                      manual_parameters=company_detail_get_parameter,
                      responses={
                          200: 'Detail Successfully'
                      })
 @swagger_auto_schema(method='delete',
+                     tags=['company'],
                      responses={
                          204: 'Delete Successfully'
                      })

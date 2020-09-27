@@ -15,6 +15,7 @@ class ProductMyList(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_classes = [permissions.IsAdminUser]
     @swagger_auto_schema(manual_parameters=product_my_list_parameter,
+                         tags=['product'],
                          operation_id='product_my_list',
                          responses={
                              200: 'Member Password Modification Successful.'
