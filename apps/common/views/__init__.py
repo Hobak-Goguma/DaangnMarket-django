@@ -1,4 +1,4 @@
-from views.test_views import TestView
+from .test_views import TestView
 from .member_addr_views import member_addr, member_addr_create, member_addr_dis_update
 from .member_detail_views import MemberDetail
 from .member_info_views import member_info
@@ -14,3 +14,6 @@ from .shopper_review_list_views import shopper_review_list
 from .shopper_review_views import shopper_review
 from .wishlist_datail_views import wishlist_detail
 from .wishlist_list_views import wishlist_list
+from .member_list_views import MemberListView
+from .sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
+from .recived_manner_detail_view import MannerViewSet

@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from helper.helper_jwt_get_user import HelperJwtGetUser
+from common.helper.helper_jwt_get_user import HelperJwtGetUser
 
 
 class TestView(APIView):
