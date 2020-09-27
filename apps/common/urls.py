@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 
 from common import views
 from common.views import *
+from common.views.recived_manner_detail_view import MannerViewSet
 
 from common.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
 #
@@ -13,7 +14,7 @@ from common.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, 
 # router.register(r'member-test', MemberViewSet, basename='member-test')
 
 router = DefaultRouter()
-router.register('manner', views.MannerViewSet)
+router.register('manner', MannerViewSet)
 
 
 urlpatterns = [

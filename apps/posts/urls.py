@@ -28,7 +28,6 @@ urlpatterns = [
     path('sigungu/<str:sido>', views.sigungu, name='sigungu'),
     path('eupmyundong/<str:sido>/<str:sigungu>', views.eupmyundong, name='eupmyundong'),
     path('eupmyundong/<str:sido>', views.sido_eupmyundong_list, name='sido_eupmyundong_list'),
-
 ]
 
 urlpatterns += router.urls
