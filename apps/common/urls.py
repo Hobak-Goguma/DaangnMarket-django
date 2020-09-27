@@ -1,14 +1,21 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
 from common import views
 from common.views import *
+from common.views.recived_manner_detail_view import MannerViewSet
 
 from common.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
 #
 # router = DefaultRouter()
 # router.register(r'member-test', MemberViewSet, basename='member-test')
+
+router = DefaultRouter()
+router.register('manner', MannerViewSet)
+
 
 urlpatterns = [
 	path('member', MemberListView.as_view(), name='member_list'),
@@ -32,7 +39,8 @@ urlpatterns = [
 	path('eupmyundong/<str:sido>', SidoEupmyundongList.as_view(), name='sido_eupmyundong_list'),
 ]
 
-# urlpatterns += router.urls
+urlpatterns += router.urls
+# urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,
