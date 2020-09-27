@@ -25,7 +25,7 @@ class ProductSearchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Product
 		fields = (
-			'id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr', 'thum')
+			'id_product', 'id_member', 'name', 'price', 'info', 'code', 'views', 'state', 'addr', 'thum', 'cdate')
 
 	def get_thum(self, obj):
 		Data = ProductImageSerializer(obj.thum.first()).data

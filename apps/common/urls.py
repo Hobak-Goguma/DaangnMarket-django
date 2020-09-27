@@ -1,13 +1,20 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
 from common import views
 from common.views import *
+from common.views.recived_manner_detail_view import MannerViewSet
 
+from common.views.sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
 #
 # router = DefaultRouter()
 # router.register(r'member-test', MemberViewSet, basename='member-test')
+
+router = DefaultRouter()
+router.register('manner', MannerViewSet)
 
 
 urlpatterns = [
@@ -27,9 +34,13 @@ urlpatterns = [
 	path('review/seller', views.seller_review, name='seller_review_list'),
 	path('review/shopper', views.shopper_review, name='shopper_review_list'),
 	path('member/upload', views.member_upload_file, name='member_upload_file'),
+	path('sigungu/<str:sido>', SigunguList.as_view(), name='sigungu'),
+	path('eupmyundong/<str:sido>/<str:sigungu>', EupmyundongList.as_view(), name='eupmyundong'),
+	path('eupmyundong/<str:sido>', SidoEupmyundongList.as_view(), name='sido_eupmyundong_list'),
 ]
 
-# urlpatterns += router.urls
+urlpatterns += router.urls
+# urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,
