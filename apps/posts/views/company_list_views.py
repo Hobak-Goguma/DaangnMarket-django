@@ -31,6 +31,9 @@ from posts.serializers.company_serializer import CompanySerializer, CompanySearc
 @api_view(['GET', 'POST'])
 def company_list(request):
     """
+    업체 리스트 조회, 생성 API
+
+    ---
     업체리스트를 모두 보여주거나 새 업체리스트를 만듭니다.
     """
     if request.method == 'GET':

@@ -23,7 +23,7 @@ from posts.views.schema.location_search_product_schema import location_search_pr
 @api_view(['GET'])
 def location_search_product(request):
     """
-	사용자의 위치에 따른 product 검색
+	사용자의 위치에 따른 매물 검색 API
 
 	---
 	# 내용

@@ -21,6 +21,9 @@ from posts.views.schema.product_category_search_schema import product_search_cat
 @api_view(['GET'])
 def product_category_search(request):
     """
+    카테고리로 매물 검색 API
+
+    ---
     제목에 검색어가 포함된 물건들 리스트
     """
     try:

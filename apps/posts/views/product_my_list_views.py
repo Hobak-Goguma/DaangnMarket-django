@@ -22,7 +22,9 @@ class ProductMyList(APIView):
                          })
     def get(self, request, format=None):
         """
-		내 제품 상세 조회, 업데이트, 삭제
+		내 매물 상세 조회, 업데이트, 삭제 API
+
+		---
 		"""
         try:
             id_member = request.headers['id-member']

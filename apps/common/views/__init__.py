@@ -16,4 +16,4 @@ from .wishlist_datail_views import wishlist_detail
 from .wishlist_list_views import wishlist_list
 from .member_list_views import MemberListView
 from .sigungu_eupmyundong_view import SigunguList, EupmyundongList, SidoEupmyundongList
-from .recived_manner_detail_view import MannerViewSet
+from .received_manner_detail_view import MannerViewSet
