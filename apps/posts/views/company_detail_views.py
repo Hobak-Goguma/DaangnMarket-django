@@ -1,17 +1,19 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from sorl.thumbnail import get_thumbnail
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from posts.views.schema.company_detail_schema import company_detail_put_parameter, company_detail_get_parameter, \
-    company_detail_example, company_detail_schema
 
 from posts.models.company_image_model import CompanyImage
 from posts.models.company_model import Company
 from posts.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
+from posts.views.schema.company_detail_schema import company_detail_put_parameter, company_detail_get_parameter, \
+    company_detail_example, company_detail_schema
 
 
+@permission_classes([AllowAny])
 @swagger_auto_schema(method='put',
                      tags=['company'],
                      manual_parameter=company_detail_put_parameter,
