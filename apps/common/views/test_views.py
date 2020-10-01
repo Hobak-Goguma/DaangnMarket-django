@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -11,6 +12,7 @@ class TestView(APIView):
 
 	"""
 	www_authenticate_realm = 'api'
+	permission_classes = [AllowAny]
 
 	def post(self, request):
 		# JWToken_user = j.get_user(self, j.get_validated_token(self, request.headers['Authorization'].split(' ')[1]))
