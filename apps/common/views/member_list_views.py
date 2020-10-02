@@ -2,6 +2,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,6 +18,7 @@ class MemberListView(APIView):
 
 	---
 	"""
+	permission_classes = [AllowAny]
 
 	@swagger_auto_schema(manual_parameters=member_list_parameter,
 	                     responses={200: member_list_get_schema}

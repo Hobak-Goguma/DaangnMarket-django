@@ -1,17 +1,18 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from posts.views.schema.location_search_product_schema import location_search_product_parameter
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from common.models.member_addr_model import Memberaddr
 from common.models.nearby_Location_model import NearbyLocation
 from posts.models.product_model import Product
 from posts.serializers.product_serializer import ProductSearchSerializer
+from posts.views.schema.location_search_product_schema import location_search_product_parameter
 
 
+@permission_classes([AllowAny])
 @swagger_auto_schema(method='get',
                      tags=['product'],
                      manual_parameters=location_search_product_parameter,

@@ -1,16 +1,16 @@
-from typing import List, Any
-
 from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from common.models.location_model import Location
-from common.serializers.location_serializer import LocationSerializer
+
 allow_sido = ["서울특별시"]
 
 
 class SigunguList(APIView):
+    permission_classes = [AllowAny]
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.gu_list = list(Location.objects.values_list('gu', flat=True).distinct())
@@ -32,6 +32,7 @@ class SigunguList(APIView):
 
 
 class EupmyundongList(APIView):
+    permission_classes = [AllowAny]
     def get(self, request, sido, sigungu):
 
         gu = Location.objects.filter(gu=sigungu)
@@ -59,6 +60,7 @@ class EupmyundongList(APIView):
 
 
 class SidoEupmyundongList(APIView):
+    permission_classes = [AllowAny]
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.gu_list = list(Location.objects.values_list('gu', flat=True).distinct())

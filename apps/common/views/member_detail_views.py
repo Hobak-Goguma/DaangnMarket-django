@@ -1,6 +1,7 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,6 +18,7 @@ class MemberDetail(APIView):
 	---
 	멤버의 id_member를 통해 개별 수정, 삭제 합니다.
 	"""
+	permission_classes = [AllowAny]
 
 	def initial(self, request, id_member, *args, **kwargs):
 		self.format_kwarg = self.get_format_suffix(**kwargs)
