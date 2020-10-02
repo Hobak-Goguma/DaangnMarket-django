@@ -3,7 +3,6 @@ from .location_model import Location
 from .log_model import Log
 from .manner_log_model import MannerLog
 from .manner_model import Manner
-from .manner_reviewer_model import MannerReviewer
 from .member_addr_model import Memberaddr
 from .nearby_Location_model import NearbyLocation
 from .rate_model import Rate
