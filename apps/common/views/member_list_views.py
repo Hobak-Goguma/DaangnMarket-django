@@ -2,7 +2,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,17 +12,23 @@ from common.views.schema.member_list_schema import member_list_schema, member_li
 	member_list_get_schema
 
 
+class TokenAuthentication(BasePermission):
+	def has_permission(self, request, view):
+		if request.method == 'POST':
+			return True
+
+
 class MemberListView(APIView):
 	"""
 	멤버 리스트 조회, 생성 API
 
 	---
 	"""
-	permission_classes = [AllowAny]
+	permission_classes = (TokenAuthentication, )
 
 	@swagger_auto_schema(manual_parameters=member_list_parameter,
-	                     responses={200: member_list_get_schema}
-	                     )
+						 responses={200: member_list_get_schema}
+						 )
 	def get(self, request, format=None):
 		paginator = PageNumberPagination()
 		paginator.page_size_query_param = "page_size"
