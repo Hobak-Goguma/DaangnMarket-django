@@ -11,16 +11,23 @@ from common.models.member_model import Member
 from common.models.manner_model import Manner
 from common.serializers.manner_serializer import MannerSerializer, MannerCreateSerializer
 
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 class MannerViewSet(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
     queryset = Manner.objects.all()
     serializer_class = MannerSerializer
     lookup_field = 'id_member'
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'put']
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            return [permission() for permission in [AllowAny]]
+        else:
+            return [permission() for permission in [IsAuthenticated]]
 
     @swagger_auto_schema(
         manual_parameters=received_manner_parameter,
@@ -41,6 +48,13 @@ class MannerViewSet(mixins.CreateModelMixin,
 
         ---
         """
+        if self.queryset.filter(id_member=request.headers['id-member']).count() > 0:
+            content = {
+                "message": "이미 매너온도가 등록됨",
+                "result": {}
+            }
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
         data = request.data.copy()
         data['id_member'] = int(request.headers['id-member'])
         serializer = MannerCreateSerializer(data=data)
@@ -106,16 +120,3 @@ class MannerViewSet(mixins.CreateModelMixin,
         result = super(MannerViewSet, self).update(request, id_member)
         return Response(result.data)
 
-    @swagger_auto_schema(
-        responses={
-            200: 'Successfully deleted.',
-        }
-    )
-    def destroy(self, request, id_member):
-        """
-        특정 멤버의 매너온도 삭제 API
-        
-        ---
-        """
-        result = super(MannerViewSet, self).destroy(request, id_member)
-        return Response(result.data)
