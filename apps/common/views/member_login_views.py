@@ -4,8 +4,9 @@ from django.utils import timezone
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 from common.models.member_model import Member
 from common.serializers.login_serializer import LoginSerializer
@@ -21,6 +22,7 @@ from common.views.schema.member_login_schema import member_login_schema, member_
     200: member_login_post_schema
     })
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def member_login(request):
     """
     멤버 로그인
