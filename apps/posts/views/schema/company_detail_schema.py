@@ -3,7 +3,7 @@ from drf_yasg import openapi
 # Manual Parameter
 id_member = openapi.Parameter(
     'id_member',
-    openapi.IN_PATH,
+    openapi.IN_HEADER,
     description='This is a member id number',
     type=openapi.TYPE_STRING
 )
@@ -12,11 +12,12 @@ s = openapi.Parameter(
     's',
     openapi.IN_QUERY,
     description='This is the size of images.',
-    type=openapi.TYPE_STRING
+    type=openapi.TYPE_STRING,
+    required=True
 )
 
 company_detail_put_parameter = [id_member]
-company_detail_get_parameter = [id_member, s]
+company_detail_get_parameter = [s]
 
 # Schema
 company_detail_schema = {

@@ -1,15 +1,22 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from sorl.thumbnail import get_thumbnail
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from posts.views.schema.product_detail_schema import product_detail_example, product_detail_schema, \
     product_detail_get_parameter, product_detail_put_parameter
+from rest_framework.permissions import BasePermission
 
 from posts.models.posts_product_image_model import ProductImage
 from posts.models.product_model import Product
 from posts.serializers.product_serializer import ProductSerializer, ProductTouchSerializer
+
+
+class TokenAuthentication(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
 
 
 @swagger_auto_schema(method='put',
@@ -36,6 +43,7 @@ from posts.serializers.product_serializer import ProductSerializer, ProductTouch
                          204: 'Delete Successfully'
                      })
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([TokenAuthentication])
 def product_detail(request, id_product):
     """
 	매물 상세 조회, 업데이트, 삭제 API
