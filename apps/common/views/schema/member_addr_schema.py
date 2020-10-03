@@ -41,15 +41,15 @@ member_addr_schema_update = {
 
 # Example
 member_addr_example_create = {
-	    'id_member' : '1',
-	    'addr' : '신림동',
+	    'id_member': '1',
+	    'addr': '신림동',
 	}
 member_addr_example = {
-	    'addr' : '신림동'
+	    'addr': '신림동'
 	}
 member_addr_example_update = {
-	    'addr' : '신림동',
-		'dis' : 2
+	    'addr': '신림동',
+		'dis': 2
 	}
 
 # custom response schema

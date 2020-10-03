@@ -22,7 +22,7 @@ from posts.serializers.company_serializer import CompanySearchSerializer
 @api_view(['GET'])
 def location_search_company(request):
     """
-	사용자의 위치에 따른 company 검색
+	사용자의 위치에 따른 업체 검색 API
 
 	---
 	# 내용

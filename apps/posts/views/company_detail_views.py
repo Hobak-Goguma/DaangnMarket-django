@@ -40,7 +40,7 @@ from posts.views.schema.company_detail_schema import company_detail_put_paramete
 @api_view(['GET', 'PUT', 'DELETE'])
 def company_detail(request, id_company):
     """
-	특정 업체리스트를 조회, 수정, 삭제 합니다.
+	특정 업체 조회, 수정, 삭제 API
 
 	---
 	# parameter
