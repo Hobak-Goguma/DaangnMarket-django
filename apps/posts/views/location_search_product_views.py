@@ -17,8 +17,8 @@ from posts.views.schema.location_search_product_schema import location_search_pr
                      tags=['product'],
                      manual_parameters=location_search_product_parameter,
                      responses={
-                         200: '상품 검색 성공',
-                         204: '검색한 상품이 없습니다.'
+	                     200: '상품 검색 성공',
+	                     204: '검색한 상품이 없습니다.'
                      })
 @api_view(['GET'])
 def location_search_product(request):
