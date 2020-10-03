@@ -12,7 +12,6 @@ from posts.serializers.product_serializer import ProductSearchSerializer
 from posts.views.schema.location_search_product_schema import location_search_product_parameter
 
 
-@permission_classes([AllowAny])
 @swagger_auto_schema(method='get',
                      tags=['product'],
                      manual_parameters=location_search_product_parameter,
@@ -21,6 +20,7 @@ from posts.views.schema.location_search_product_schema import location_search_pr
 	                     204: '검색한 상품이 없습니다.'
                      })
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def location_search_product(request):
     """
 	사용자의 위치에 따른 매물 검색 API
@@ -101,7 +101,7 @@ def location_search_product(request):
     # 비회원
     else:
         # 모든 제품 검색
-        product = Product.objects.filter(name__contains=Search)
+        product = Product.objects.filter(name__contains=Search).order_by('-cdate')
         if product.count() == 0:
             content = {
                 "message": "검색한 제품이 없습니다.",
