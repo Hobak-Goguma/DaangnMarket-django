@@ -15,7 +15,11 @@
 
     function testWebSocket()
     {
-        websocket = new WebSocket(wsUri);
+        websocket = new WebSocket(wsUri, {
+          'header': {
+            'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAxNzk4MzkzLCJqdGkiOiIyY2EzOGYxOTY5NjA0YjBmYjNlYWVkNmZmZWJlZjBiYiIsInVzZXJfaWQiOjN9.FC0tNy-oBO8jGzRMZ9IS4vy-pKeZum1SLrCuklENpbo"
+          }
+        });
         websocket.onopen = function(evt) { onOpen(evt) };
         websocket.onclose = function(evt) { onClose(evt) };
         websocket.onmessage = function(evt) { onMessage(evt) };
