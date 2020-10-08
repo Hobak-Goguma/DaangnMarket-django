@@ -10,7 +10,7 @@ router.register('manner', views.MannerViewSet)
 
 urlpatterns = [
 	path('member', views.MemberListView.as_view(), name='member_list'),
-	path('member/login', views.member_login, name='login'),
+	path('member/login', views.member_login_views, name='login'),
 	path('member/overlap', views.member_overlap, name='member_overlap'),
 	path('member/overlap/nick-name', views.nick_name_overlap, name='nick_name_overlap'),
 	path('member/id/<id_member>', views.MemberDetail.as_view(), name='member_detail'),
@@ -18,7 +18,7 @@ urlpatterns = [
 	path('member/addr/id/<id_member>', views.member_addr, name='member_addr'),
 	path('member/addr/create', views.member_addr_create, name='member_addr_create'),
 	path('member/addr/select', views.member_addr_dis_update, name='member_addr_dis_update'),
-	path('test', views.member_new_login_views, name='test'),
+	# path('test', views.member_new_login_views, name='test'),
 	path('wishlist', views.wishlist_list, name='wishlist_list'),
 	path('wishlist/<id_member>', views.wishlist_detail, name='wishlist_detail'),
 	path('product/selling/<id_member>', views.selling_product_list, name='selling_product_list'),

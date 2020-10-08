@@ -2,9 +2,7 @@ from .member_addr_views import member_addr, member_addr_create, member_addr_dis_
 from .member_detail_views import MemberDetail
 from .member_info_views import member_info
 from .member_list_views import MemberListView
-from .member_list_views import MemberListView
-from .member_login_views import member_login
-from .member_new_login_views import member_new_login_views
+from .member_login_views import member_login_views
 from .member_overlap_views import member_overlap
 from .member_upload_file_views import member_upload_file
 from .nick_name_overlap_views import nick_name_overlap
