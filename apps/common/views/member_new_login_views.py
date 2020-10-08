@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.utils import timezone
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from jwt import decode
 from rest_framework import status
@@ -10,17 +9,13 @@ from rest_framework.response import Response
 
 from common.models.member_model import Member
 from common.serializers.login_serializer import LoginSerializer
-from common.views.schema.member_login_schema import member_login_schema, member_login_example, member_login_post_schema
+from common.views.schema.member_login_schema import member_login_post_schema
 
 
-@swagger_auto_schema(method='post', request_body=openapi.Schema(
-	type=openapi.TYPE_OBJECT,
-	properties=member_login_schema,
-	example=member_login_example,
-),
-                     responses={
-	                     200: member_login_post_schema
-                     })
+@swagger_auto_schema(method='post',
+	 responses={
+	     200: member_login_post_schema
+	 })
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def member_new_login_views(request):
