@@ -1,6 +1,8 @@
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
+
 from rest_framework.views import APIView
 
 from common.models.location_model import Location
@@ -9,12 +11,24 @@ allow_sido = ["서울특별시"]
 
 
 class SigunguList(APIView):
+    """
+    	특정 시, 도의 시군구 리스트 조회
+
+    	---
+    	특정 시, 도의 시군구 리스트를 조회합니다.
+    	"""
     permission_classes = [AllowAny]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.gu_list = list(Location.objects.values_list('gu', flat=True).distinct())
 
+    @swagger_auto_schema(
+        operation_id='sigungu_list',
+        responses={
+            200: 'Success',
+            400: 'Not allow region'
+        })
     def get(self, request, sido):
         gu_list = list(Location.objects.values_list('gu', flat=True).distinct())
         if sido not in allow_sido:
@@ -32,9 +46,22 @@ class SigunguList(APIView):
 
 
 class EupmyundongList(APIView):
-    permission_classes = [AllowAny]
-    def get(self, request, sido, sigungu):
+    """
+    	특정 시군구의 읍면동 리스트 조회
 
+    	---
+    	특정 시군구의 읍면동 리스트를 조회합나디.
+    """
+    permission_classes = [AllowAny]
+
+    @swagger_auto_schema(
+        operation_id='sigungu_list',
+        responses={
+            200: 'Success',
+            404: 'Not exist gu',
+            400: 'Not allow region'
+        })
+    def get(self, request, sido, sigungu):
         gu = Location.objects.filter(gu=sigungu)
         dong_list = list(Location.objects.filter(gu=sigungu).values_list('dong', flat=True).distinct())
 
@@ -60,7 +87,14 @@ class EupmyundongList(APIView):
 
 
 class SidoEupmyundongList(APIView):
+    """
+        특정 시도의 {시군구: 읍면동} 리스트 조회
+
+        ---
+        특정 시도의 {시군구: 읍면동} 리스트를 조회합나디.
+    """
     permission_classes = [AllowAny]
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.gu_list = list(Location.objects.values_list('gu', flat=True).distinct())
@@ -68,6 +102,12 @@ class SidoEupmyundongList(APIView):
         for gu in self.gu_list:
             self.gu_dong_dict[gu] = list(Location.objects.filter(gu=gu).values_list('dong', flat=True).distinct())
 
+    @swagger_auto_schema(
+        operation_id='sigungu_list',
+        responses={
+            200: 'Success',
+            400: 'Not allow region'
+        })
     def get(self, request, sido):
         if sido not in allow_sido:
             content = {

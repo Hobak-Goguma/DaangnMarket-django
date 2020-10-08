@@ -38,17 +38,17 @@ from posts.serializers.product_serializer import ProductSerializer, ProductTouch
 @api_view(['GET', 'PUT', 'DELETE'])
 def product_detail(request, id_product):
     """
-	제품 상세 조회, 업데이트, 삭제
+	매물 상세 조회, 업데이트, 삭제 API
 
 	---
 	# parameter
 		- s = 사진픽셀 크기 ex) 400x400
 
 	# 수정가능 목록 form/data OR json/data
-		- name : 상품 제목
-		- price : 상품 가격
-		- info : 상품 내용
-		- category : 상품 카테고리
+		- name : 매물 제목
+		- price : 매물 가격
+		- info : 매물 내용
+		- category : 매물 카테고리
 		- addr : 판매가 이루어질 장소 (동설정까지만 가능)
 
 	# 내용
