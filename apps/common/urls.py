@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from common import views
@@ -19,7 +18,7 @@ urlpatterns = [
 	path('member/addr/id/<id_member>', views.member_addr, name='member_addr'),
 	path('member/addr/create', views.member_addr_create, name='member_addr_create'),
 	path('member/addr/select', views.member_addr_dis_update, name='member_addr_dis_update'),
-	path('test', views.TestView.as_view(), name='test'),
+	path('test', views.member_new_login_views, name='test'),
 	path('wishlist', views.wishlist_list, name='wishlist_list'),
 	path('wishlist/<id_member>', views.wishlist_detail, name='wishlist_detail'),
 	path('product/selling/<id_member>', views.selling_product_list, name='selling_product_list'),
