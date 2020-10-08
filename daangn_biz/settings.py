@@ -197,7 +197,14 @@ TIME_ZONE = 'Asia/Seoul'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 SWAGGER_SETTINGS = {
-	'DEFAULT_INFO': 'import.path.to.urls.api_info',
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        },
+    },
+    'USE_SESSION_AUTH': False
 }
 
 STATIC_URL = '/static/'
