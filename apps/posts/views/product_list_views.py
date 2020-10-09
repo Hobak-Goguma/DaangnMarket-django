@@ -32,9 +32,10 @@ from posts.serializers.product_serializer import ProductSearchSerializer, Produc
 @api_view(['GET', 'POST'])
 def product_list(request):
     """
-    상품을 모두 보여주거나 새 상품리스트를 만듭니다.
+    매물 리스트 조회, 등록 API
 
     ---
+    상품을 모두 보여주거나 새 상품리스트를 만듭니다.
     # form/data OR json/data
         - id_product : seq key
         - id_member : 상품을 올린 member 외래키
