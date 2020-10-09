@@ -6,7 +6,7 @@ from .member_login_views import member_login_views
 from .member_overlap_views import member_overlap
 from .member_upload_file_views import member_upload_file
 from .nick_name_overlap_views import nick_name_overlap
-from .recived_manner_detail_view import MannerViewSet
+from .received_manner_detail_view import MannerViewSet
 # from .seller_review_list_views import seller_review_list
 from .seller_review_views import seller_review
 from .selling_product_list_views import selling_product_list
