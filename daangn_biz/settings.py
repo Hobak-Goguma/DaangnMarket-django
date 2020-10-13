@@ -139,27 +139,27 @@ WSGI_APPLICATION = 'daangn_biz.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'daangn-dev',
-		'USER': 'root',
-		'PASSWORD': '1234',
-		'HOST': 'localhost',
-		'PORT': 3306
-	}
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'daangn',
-#         'USER': 'ddusi',
-#         'PASSWORD': '@Hobakgoguma7',
-#         'HOST': '34.64.212.107',
-#         'PORT': 3306
-#     }
+# 	'default': {
+# 		'ENGINE': 'django.db.backends.mysql',
+# 		'NAME': 'daangn-dev',
+# 		'USER': 'root',
+# 		'PASSWORD': '1234',
+# 		'HOST': 'localhost',
+# 		'PORT': 3306
+# 	}
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'daangn_dev',
+        'USER': 'ddusi',
+        'PASSWORD': '@Hobakgoguma7',
+        'HOST': '34.64.212.107',
+        'PORT': 3306
+    }
+}
 
 
 # Password validation
