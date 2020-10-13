@@ -5,6 +5,7 @@ from django.utils import timezone, dateformat
 from rest_framework.pagination import PageNumberPagination
 from posts.views.schema.recommend_product_list_schema import recommend_product_list_parameter
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import AllowAny
 
 from posts.models.product_model import Product
 from posts.serializers.product_serializer import ProductSearchSerializer
@@ -25,6 +26,7 @@ class RecommendProductListViewSet(mixins.ListModelMixin,
                                       cdate__day=timezone.now().day).order_by('-views',)
     serializer_class = ProductSearchSerializer
     pagination_class = Pagination
+    permission_classes = [AllowAny]
 
     @swagger_auto_schema(
         tags=['recommend'],
