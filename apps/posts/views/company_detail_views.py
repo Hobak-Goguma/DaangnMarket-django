@@ -5,12 +5,19 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from sorl.thumbnail import get_thumbnail
+from rest_framework.permissions import BasePermission
 
 from posts.models.company_image_model import CompanyImage
 from posts.models.company_model import Company
 from posts.serializers.company_serializer import CompanySerializer, CompanyTouchSerializer
 from posts.views.schema.company_detail_schema import company_detail_put_parameter, company_detail_get_parameter, \
     company_detail_example, company_detail_schema
+
+
+class TokenAuthentication(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
 
 
 @permission_classes([AllowAny])
@@ -38,6 +45,7 @@ from posts.views.schema.company_detail_schema import company_detail_put_paramete
                          204: 'Delete Successfully'
                      })
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([TokenAuthentication])
 def company_detail(request, id_company):
     """
 	특정 업체 조회, 수정, 삭제 API

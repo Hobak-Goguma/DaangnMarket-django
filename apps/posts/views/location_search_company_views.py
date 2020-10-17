@@ -1,9 +1,9 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import AllowAny
 from posts.views.schema.location_search_company_schema import location_search_company_parameter
 
 from common.models.member_addr_model import Memberaddr
@@ -20,6 +20,7 @@ from posts.serializers.company_serializer import CompanySearchSerializer
                          204: '검색한 업체가 없습니다.'
                      })
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def location_search_company(request):
     """
 	사용자의 위치에 따른 업체 검색 API
@@ -71,7 +72,7 @@ def location_search_company(request):
 
     # 비회원
     else:
-        company = Company.objects.filter(name__contains=Search).orber_by('-cdate')
+        company = Company.objects.filter(name__contains=Search).order_by('-cdate')
         if company.count() == 0:
             content = {
                 "message": "검색한 없체가 없습니다.",
