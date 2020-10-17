@@ -4,10 +4,8 @@ from drf_yasg.utils import swagger_auto_schema
 from jwt import decode
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 
 from common.models.member_model import Member
 from common.serializers.login_serializer import LoginSerializer
@@ -30,7 +28,6 @@ def member_login_views(request):
 	if request.method == 'POST':
 		user_token = request.headers['Authorization'].split(' ')[1]
 		token_decoded = decode(user_token, settings.SECRET_KEY, algorithms=['HS256'])
-		print(token_decoded['user_id'])
 
 		try:
 			member = Member.objects.get(auth=token_decoded['user_id'])
