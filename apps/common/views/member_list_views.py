@@ -5,6 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from common.models.member_model import Member
 from common.serializers.member_serializer import MemberSerializer
@@ -16,8 +17,9 @@ class TokenAuthentication(BasePermission):
 	def has_permission(self, request, view):
 		if request.method == 'POST':
 			return True
-		else:
-			return False
+		elif request.method == 'GET':
+			return bool(JWTAuthentication().authenticate(request))
+
 
 class MemberListView(APIView):
 	"""
@@ -25,11 +27,12 @@ class MemberListView(APIView):
 
 	---
 	"""
-	permission_classes = (TokenAuthentication, )
+	permission_classes = [TokenAuthentication]
+	serializer_class = MemberSerializer
 
 	@swagger_auto_schema(manual_parameters=member_list_parameter,
-						 responses={200: member_list_get_schema}
-						 )
+	                     responses={200: member_list_get_schema}
+	                     )
 	def get(self, request, format=None):
 		paginator = PageNumberPagination()
 		paginator.page_size_query_param = "page_size"
