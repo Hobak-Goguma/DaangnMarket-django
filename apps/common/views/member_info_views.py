@@ -1,5 +1,7 @@
+from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from jwt import decode
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -25,22 +27,13 @@ def member_info(request):
 	---
 	Modifiable List : nick_name, tel, email, birth, gender
 	"""
-	try:
-		if 'id-member' in request.headers:
-			member = Member.objects.get(id_member=request.headers['id-member'])
-		else:
-			content = {
-				"message": "header정보가 없습니다.",
-				"result": {}
-			}
-			return Response(content, status=status.HTTP_404_NOT_FOUND)
+	user_token = request.headers['Authorization'].split(' ')[1]
+	token_decoded = decode(user_token, settings.SECRET_KEY, algorithms=['HS256'])
 
+	try:
+		member = Member.objects.get(auth=token_decoded['user_id'])
 	except Member.DoesNotExist:
-		content = {
-			"message": "없는 사용자 입니다.",
-			"result": {}
-		}
-		return Response(content, status=status.HTTP_404_NOT_FOUND)
+		return Response(status=status.HTTP_404_NOT_FOUND)
 
 	if request.method == 'PUT':
 		serializer = MemberTouchSerializer(member, data=request.data, partial=True)
