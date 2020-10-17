@@ -49,14 +49,14 @@ class MemberDetail(APIView):
 		user_token = request.headers['Authorization'].split(' ')[1]
 		token_decoded = decode(user_token, settings.SECRET_KEY, algorithms=['HS256'])
 
-		if id_member != token_decoded['user_id']:
-			return Response(status=status.HTTP_401_UNAUTHORIZED)
-
 		try:
 			self.member = Member.objects.get(auth=token_decoded['user_id'])
 			self.user = User.objects.get(id=token_decoded['user_id'])
 		except Member.DoesNotExist:
 			return Response(status=status.HTTP_404_NOT_FOUND)
+
+		if id_member != self.member.id_member:
+			return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 		self.user.set_password(request.data['user_pw'])
 		self.user.save()
