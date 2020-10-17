@@ -3,9 +3,9 @@ from .member_detail_views import MemberDetail
 from .member_info_views import member_info
 from .member_list_views import MemberListView
 from .member_login_views import member_login_views
+from .member_nick_name_overlap_views import nick_name_overlap
 from .member_overlap_views import member_overlap
 from .member_upload_file_views import member_upload_file
-from .nick_name_overlap_views import nick_name_overlap
 from .received_manner_detail_view import MannerViewSet
 # from .seller_review_list_views import seller_review_list
 from .seller_review_views import seller_review

@@ -2,7 +2,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny, BasePermission
+from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,7 +16,8 @@ class TokenAuthentication(BasePermission):
 	def has_permission(self, request, view):
 		if request.method == 'POST':
 			return True
-
+		else:
+			return False
 
 class MemberListView(APIView):
 	"""
