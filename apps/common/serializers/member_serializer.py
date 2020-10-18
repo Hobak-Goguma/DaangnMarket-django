@@ -29,6 +29,13 @@ class MemberSerializer(serializers.ModelSerializer):
 class MemberReviseSerializer(serializers.ModelSerializer):
 	udate = serializers.DateTimeField(default=timezone.now)
 
+	def create(self, validated_data):
+		return Member(**validated_data)
+
+	def update(self, instance, validated_data):
+		instance.user_pw = validated_data.get('user_pw', instance.user_pw)
+		return instance
+
 	class Meta:
 		model = Member
 		fields = ('id_member', 'user_pw', 'udate')

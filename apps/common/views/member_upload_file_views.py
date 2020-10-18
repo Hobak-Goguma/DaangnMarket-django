@@ -1,6 +1,8 @@
 import os
 
+from django.conf import settings
 from drf_yasg.utils import swagger_auto_schema
+from jwt import decode
 from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -8,7 +10,7 @@ from rest_framework.response import Response
 
 from common.forms.member_upload_file_form import MemberUploadFileForm
 from common.models.member_model import Member
-from common.views.schema.member_upload_file_schema import member_upload_file_delete, member_upload_file_parameter
+from common.views.schema.member_upload_file_schema import member_upload_file_parameter
 
 
 @swagger_auto_schema(method='post',
@@ -17,7 +19,7 @@ from common.views.schema.member_upload_file_schema import member_upload_file_del
 					 	201: 'File Upload Successful.'
 					 })
 @swagger_auto_schema(method='delete',
-                     manual_parameters=member_upload_file_delete,
+                     # manual_parameters=member_upload_file_delete,
 					 responses={
 					 	204: 'File Deleted Successful.'
 					 })
@@ -34,8 +36,14 @@ def member_upload_file(request):
 	# ImageFormSet = modelformset_factory(UploadFileModel, form=UploadFileForm, extra=10)
 
 	if request.method == 'POST':
-		id_member = request.POST['id_member']
-		member: Member = Member.objects.get(id_member=id_member)
+		user_token = request.headers['Authorization'].split(' ')[1]
+		token_decoded = decode(user_token, settings.SECRET_KEY, algorithms=['HS256'])
+
+		try:
+			member = Member.objects.get(auth=token_decoded['user_id'])
+		except Member.DoesNotExist:
+			return Response(status=status.HTTP_404_NOT_FOUND)
+
 		image_title: str = os.path.splitext(str(request.FILES['image']))[0]
 		form = MemberUploadFileForm({'image_title': image_title}, request.FILES, instance=member)
 		if form.is_valid():
@@ -48,20 +56,17 @@ def member_upload_file(request):
 		return Response(content, status=status.HTTP_200_OK)
 
 	elif request.method == 'DELETE':
-		id_member = request.POST['id_member']
+		user_token = request.headers['Authorization'].split(' ')[1]
+		token_decoded = decode(user_token, settings.SECRET_KEY, algorithms=['HS256'])
+
 		try:
-			q = Member.objects.get(id_member=id_member)
+			member = Member.objects.get(auth=token_decoded['user_id'])
 		except Member.DoesNotExist:
-			content = {
-				"message": "회원 프로필 사진이 없습니다.",
-				"result": {"id_member": id_member}
-			}
+			return Response(status=status.HTTP_404_NOT_FOUND)
 
-			return Response(content, status=status.HTTP_404_NOT_FOUND)
-
-		q.delete_image()
+		member.delete_image()
 		content = {
 			"message": "삭제 완료",
-			"result": {"id_member": q.id_member}
+			"result": {"id_member": member.id_member}
 		}
 		return Response(content, status=status.HTTP_204_NO_CONTENT)

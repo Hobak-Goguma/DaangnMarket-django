@@ -49,7 +49,7 @@ member_addr_example = {
 	}
 member_addr_example_update = {
 	    'addr': '신림동',
-		'dis': 2
+		'distance': 2
 	}
 
 # custom response schema
